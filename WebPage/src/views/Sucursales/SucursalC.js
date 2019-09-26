@@ -18,7 +18,7 @@ import Table from "components/Table/Table.js";
 import styles from "assets/jss/material-dashboard-react/views/iconsStyle.js";
 import { borderRight } from "@material-ui/system";
 
-import { topClientSJ } from "variables/general.js";
+import { topClientC } from "variables/general.js";
 
 const useStyles = makeStyles(styles);
 //Crear función para obtener valores db segun fecha
@@ -156,7 +156,7 @@ export default function Sucursal() {
             <Table
               tableHeaderColor="warning"
               tableHead={["Nombre", "Categoria", "Total de pedidos"]}
-              tableData={topClientSJ}
+              tableData={topClientC}
             />
           </CardBody>
         </Card>

@@ -5,13 +5,11 @@ import ChartistGraph from "react-chartist";
 import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
-import DateRange from "@material-ui/icons/DateRange";
-import Update from "@material-ui/icons/Update";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
-import AccessTime from "@material-ui/icons/AccessTime";
 import Accessibility from "@material-ui/icons/Accessibility";
 import Ofice from "@material-ui/icons/CardTravel";
 import AttachMoney from "@material-ui/icons/AttachMoney";
+import User from "@material-ui/icons/SupervisedUserCircle";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -68,8 +66,8 @@ export default function Dashboard() {
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
-                <DateRange />
-                Last 24 Hours
+                <AttachMoney />
+                General
               </div>
             </CardFooter>
           </Card>
@@ -85,8 +83,8 @@ export default function Dashboard() {
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
-                <Update />
-                Just Updated
+                <User />
+                General
               </div>
             </CardFooter>
           </Card>
@@ -118,11 +116,7 @@ export default function Dashboard() {
                 Mejor sucursal en ventas:
               </p>
             </CardBody>
-            <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> updated 4 minutes ago
-              </div>
-            </CardFooter>
+            <CardFooter chart>Mas información en sucursales</CardFooter>
           </Card>
         </GridItem>
         <GridItem xs={12} sm={12} md={4}>
@@ -141,11 +135,7 @@ export default function Dashboard() {
               <h4 className={classes.cardTitle}>Monto recaudado por tipo</h4>
               <p className={classes.cardCategory}>General</p>
             </CardBody>
-            <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> campaign sent 2 days ago
-              </div>
-            </CardFooter>
+            <CardFooter chart>Mas información en sucursales</CardFooter>
           </Card>
         </GridItem>
         <GridItem xs={12} sm={12} md={4}>
@@ -166,11 +156,7 @@ export default function Dashboard() {
                 Sucursal con mayor numero de clientes:
               </p>
             </CardBody>
-            <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> campaign sent 2 days ago
-              </div>
-            </CardFooter>
+            <CardFooter chart>Mas información en sucursales</CardFooter>
           </Card>
         </GridItem>
       </GridContainer>

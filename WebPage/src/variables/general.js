@@ -15,10 +15,39 @@ const clientOneName = "Pablo";
 const clientOneType = "Oro";
 const clientOnePharmacy = "SJ";
 
+//Traer los mejores clientes por sucursal
+const clientSJName = "Jesus";
+const clientSJType = "Oro";
+const noPedidosSJ = 16;
+const clientCName = "Jesus";
+const clientCType = "Oro";
+const noPedidosC = 16;
+const clientHName = "Jesus";
+const clientHType = "Oro";
+const noPedidosH = 16;
+
 var topClient = [
   [clientOneName, clientOneType, clientOnePharmacy],
   [clientOneName, clientOneType, clientOnePharmacy],
   [clientOneName, clientOneType, clientOnePharmacy]
+];
+
+var topClientSJ = [
+  [clientSJName, clientSJType, noPedidosSJ],
+  [clientSJName, clientSJType, noPedidosSJ],
+  [clientSJName, clientSJType, noPedidosSJ]
+];
+
+var topClientC = [
+  [clientCName, clientCType, noPedidosC],
+  [clientCName, clientCType, noPedidosC],
+  [clientCName, clientCType, noPedidosC]
+];
+
+var topClientH = [
+  [clientHName, clientHType, noPedidosH],
+  [clientHName, clientHType, noPedidosH],
+  [clientHName, clientHType, noPedidosH]
 ];
 
 var tipoSJ = [
@@ -38,5 +67,8 @@ module.exports = {
   tipoSJ,
   tipoH,
   tipoC,
-  topClient
+  topClient,
+  topClientC,
+  topClientH,
+  topClientSJ
 };

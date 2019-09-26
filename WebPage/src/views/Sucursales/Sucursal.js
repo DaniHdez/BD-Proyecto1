@@ -8,10 +8,9 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
-//Solo como ejemplo borrar
-import Dashboard from "views/Dashboard/Dashboard.js";
-//
 import SucursalSJ from "views/Sucursales/SucursalSJ.js";
+import SucursalC from "views/Sucursales/SucursalC.js";
+import SucursalH from "views/Sucursales/SucursalH.js";
 
 import styles from "assets/jss/material-dashboard-react/views/iconsStyle.js";
 
@@ -34,8 +33,8 @@ export default function Sucursal() {
                   tabName: "San José",
                   tabContent: <SucursalSJ></SucursalSJ>
                 },
-                { tabName: "Cartago" },
-                { tabName: "Heredia" }
+                { tabName: "Cartago", tabContent: <SucursalC></SucursalC> },
+                { tabName: "Heredia", tabContent: <SucursalH></SucursalH> }
               ]}
             />
           </CardBody>
