@@ -26,7 +26,6 @@ import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
 import Typography from "views/Typography/Typography.js";
-import Icons from "views/Icons/Icons.js";
 import Sucursal from "views/Sucursales/Sucursal.js";
 
 const dashboardRoutes = [
@@ -62,7 +61,7 @@ const dashboardRoutes = [
     path: "/pedidos",
     name: "Pedidos",
     icon: LibraryBooks,
-    component: Icons,
+    component: Sucursal,
     layout: "/admin"
   },
   {
