@@ -26,6 +26,10 @@ const clientHName = "Jesus";
 const clientHType = "Oro";
 const noPedidosH = 16;
 
+var Medicines = [];
+var Orders = [];
+var Clients = [];
+
 var topClient = [
   [clientOneName, clientOneType, clientOnePharmacy],
   [clientOneName, clientOneType, clientOnePharmacy],
@@ -70,5 +74,8 @@ module.exports = {
   topClient,
   topClientC,
   topClientH,
-  topClientSJ
+  topClientSJ,
+  Medicines,
+  Orders,
+  Clients
 };

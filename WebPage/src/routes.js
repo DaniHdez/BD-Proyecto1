@@ -24,9 +24,10 @@ import Persons from "@material-ui/icons/People";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
-import TableList from "views/TableList/TableList.js";
-import Typography from "views/Typography/Typography.js";
+import MedListTable from "views/Medicines/MedListTable.js";
 import Sucursal from "views/Sucursales/Sucursal.js";
+import Clients from "views/Clients/Clients.js";
+import Orders from "views/Orders/Orders.js";
 
 const dashboardRoutes = [
   {
@@ -47,21 +48,21 @@ const dashboardRoutes = [
     path: "/medicamentos",
     name: "Medicamentos",
     icon: "content_paste",
-    component: TableList,
+    component: MedListTable,
     layout: "/admin"
   },
   {
     path: "/clientes",
     name: "Clientes",
     icon: Persons,
-    component: Typography,
+    component: Clients,
     layout: "/admin"
   },
   {
     path: "/pedidos",
     name: "Pedidos",
     icon: LibraryBooks,
-    component: Sucursal,
+    component: Orders,
     layout: "/admin"
   },
   {
