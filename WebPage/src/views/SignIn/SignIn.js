@@ -59,7 +59,7 @@ export default function SignInSide() {
       if (validUser === true) {
         window.location.href = "/admin/dashboard";
       } else {
-        window.alert("Uauario o contraseña invalidos");
+        window.alert("Usuario o contraseña invalidos");
       }
     }
   }

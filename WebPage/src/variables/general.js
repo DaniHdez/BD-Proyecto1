@@ -26,10 +26,6 @@ const clientHName = "Jesus";
 const clientHType = "Oro";
 const noPedidosH = 16;
 
-var Medicines = [];
-var Orders = [];
-var Clients = [];
-
 var topClient = [
   [clientOneName, clientOneType, clientOnePharmacy],
   [clientOneName, clientOneType, clientOnePharmacy],
@@ -67,6 +63,54 @@ var tipoC = [
   ["Pedidos especiales:", pedidosEspecialesH]
 ];
 
+// #########################################
+// // // Data for Medicine, Clients, Orders
+// #########################################
+//Ejemplo menu item
+const currencies = [
+  {
+    value: "USD",
+    label: "$"
+  },
+  {
+    value: "EUR",
+    label: "€"
+  },
+  {
+    value: "BTC",
+    label: "฿"
+  },
+  {
+    value: "JPY",
+    label: "¥"
+  }
+];
+
+var Medicines = [];
+var Orders = [];
+var Clients = [];
+//Se deben traer los clientes de la base
+//El value se puede definir con un contador dependiendo de la cantidad de clientes en la tabla
+const clientsH = [
+  { value: "client1", label: "Luis" },
+  { value: "client2", label: "Luis" },
+  { value: "client3", label: "Luis" }
+];
+const orderState = [
+  { value: "listo", label: "Listo para entregar" },
+  { value: "entregado", label: "Entregado" }
+];
+
+const orderType = [
+  { value: "especia;", label: "Especial" },
+  { value: "regular", label: "Regular" }
+];
+
+const medicines = [
+  { value: "especia;", label: "Especial" },
+  { value: "regular", label: "Regular" }
+];
+
 module.exports = {
   tipoSJ,
   tipoH,
@@ -77,5 +121,10 @@ module.exports = {
   topClientSJ,
   Medicines,
   Orders,
-  Clients
+  Clients,
+  currencies,
+  clientsH,
+  orderState,
+  orderType,
+  medicines
 };
