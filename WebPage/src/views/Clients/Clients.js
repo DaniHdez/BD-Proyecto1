@@ -68,13 +68,13 @@ export default function TableList() {
   };
 
   const handlePopClickAccept = () => {
-    var name = document.getElementById("name").value;
-    var lastname1 = document.getElementById("lastname1").value;
-    var lastname2 = document.getElementById("lastname2").value;
-    var id = document.getElementById("id").value;
-    var accountNumber = document.getElementById("accountNumber").value;
-    var phone = document.getElementById("cellphone").value;
-    var province = document.getElementById("province").value;
+    var name = document.getElementById("clientName").value;
+    var lastname1 = document.getElementById("clientLastname1").value;
+    var lastname2 = document.getElementById("clientLastname2").value;
+    var id = document.getElementById("clientId").value;
+    var accountNumber = document.getElementById("clientAccountNumber").value;
+    var phone = document.getElementById("clientCellphone").value;
+    var province = document.getElementById("clientProvince").value;
     if (
       name != "" &&
       lastname1 != "" &&
@@ -139,7 +139,7 @@ export default function TableList() {
             autoFocus
             required
             margin="dense"
-            id="name"
+            id="clientName"
             label="Nombre"
             type="name"
             fullWidth
@@ -148,7 +148,7 @@ export default function TableList() {
             autoFocus
             required
             margin="dense"
-            id="lastname1"
+            id="clientLastname1"
             label="Apellido"
             type="name"
             fullWidth
@@ -157,7 +157,7 @@ export default function TableList() {
             autoFocus
             required
             margin="dense"
-            id="lastname2"
+            id="clientLastname2"
             label="Apellido"
             type="name"
             fullWidth
@@ -166,7 +166,7 @@ export default function TableList() {
             autoFocus
             required
             margin="dense"
-            id="id"
+            id="clientId"
             label="Cédula"
             type="id"
             fullWidth
@@ -175,7 +175,7 @@ export default function TableList() {
             autoFocus
             required
             margin="dense"
-            id="accountNumber"
+            id="clientAccountNumber"
             label="Número de cuenta"
             fullWidth
           />
@@ -183,7 +183,7 @@ export default function TableList() {
             autoFocus
             required
             margin="dense"
-            id="cellphone"
+            id="clientCellphone"
             label="Teléfono"
             fullWidth
           />
@@ -191,7 +191,7 @@ export default function TableList() {
             autoFocus
             required
             margin="dense"
-            id="province"
+            id="clientProvince"
             label="Provincia de residencia"
             fullWidth
           />

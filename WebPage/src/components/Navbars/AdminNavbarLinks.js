@@ -78,13 +78,6 @@ export default function AdminNavbarLinks() {
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
                     <MenuItem
-                      onClick={handleOpenProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Profile
-                    </MenuItem>
-                    <Divider light />
-                    <MenuItem
                       onClick={handleCloseProfile}
                       className={classes.dropdownItem}
                     >

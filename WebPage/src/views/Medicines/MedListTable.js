@@ -58,6 +58,14 @@ export default function TableList() {
 
   const [open, setOpen] = React.useState(false);
 
+  const [values, setValues] = React.useState({
+    multiline: ""
+  });
+
+  const handleChange = name => event => {
+    setValues({ ...values, [name]: event.target.value });
+  };
+
   const handleClick = () => {
     setOpen(true);
   };
@@ -106,7 +114,109 @@ export default function TableList() {
             <DialogContentText>
               Datos requeridos para medicamentos
             </DialogContentText>
+            <TextField
+              autoFocus
+              required
+              margin="dense"
+              id="medicineName"
+              label="Nombre"
+              type="name"
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              required
+              margin="dense"
+              id="medicineBrand"
+              label="Marca"
+              type="name"
+              fullWidth
+            />
+            <TextField
+              required
+              id="medicineDescription"
+              label="Descripción"
+              multiline
+              rowsMax="4"
+              value={values.multiline}
+              onChange={handleChange("multiline")}
+              className={classes.textField}
+              margin="normal"
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              required
+              margin="dense"
+              id="medicineType"
+              label="Tipo"
+              type="name"
+              fullWidth
+            />
+            <TextField
+              required
+              id="medicineDoseI"
+              label="Dosis para niños"
+              multiline
+              rowsMax="4"
+              value={values.multiline}
+              onChange={handleChange("multiline")}
+              className={classes.textField}
+              margin="normal"
+              fullWidth
+            />
+            <TextField
+              required
+              id="medicineDoseA"
+              label="Dosis para adultos"
+              multiline
+              rowsMax="4"
+              value={values.multiline}
+              onChange={handleChange("multiline")}
+              className={classes.textField}
+              margin="normal"
+              fullWidth
+            />
+            <TextField
+              required
+              id="sideEffects"
+              label="Efectos secundarios"
+              multiline
+              rowsMax="4"
+              value={values.multiline}
+              onChange={handleChange("multiline")}
+              className={classes.textField}
+              margin="normal"
+              fullWidth
+            />
+            {/* Foto */}
+            <TextField
+              autoFocus
+              required
+              margin="dense"
+              id="medicinePrice"
+              label="Price"
+              type="money"
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              required
+              margin="dense"
+              id="medicineQuantity"
+              label="Cantidad"
+              type="numerical"
+              fullWidth
+            />
           </DialogContent>
+          <DialogActions>
+            <Button onClick={handlePopClickCancel} color="primary">
+              Cancelar
+            </Button>
+            <Button onClick={handlePopClickAccept} color="primary">
+              Añadir
+            </Button>
+          </DialogActions>
         </Dialog>
       </GridItem>
     </GridContainer>

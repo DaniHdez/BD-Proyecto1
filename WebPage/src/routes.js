@@ -17,13 +17,11 @@
 */
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
-import Person from "@material-ui/icons/Person";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import Pharmacy from "@material-ui/icons/LocalPharmacy";
 import Persons from "@material-ui/icons/People";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
-import UserProfile from "views/UserProfile/UserProfile.js";
 import MedListTable from "views/Medicines/MedListTable.js";
 import Sucursal from "views/Sucursales/Sucursal.js";
 import Clients from "views/Clients/Clients.js";

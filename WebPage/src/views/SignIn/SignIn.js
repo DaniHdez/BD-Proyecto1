@@ -9,6 +9,13 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+// Popup
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import Warnning from "@material-ui/icons/WarningOutlined";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,24 +48,35 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignInSide() {
   const classes = useStyles();
+  // const [open, setOpen] = React.useState(false);
+
   function validate(username, password) {
     //Buscar en base de datos si existe retur True, si no return false
     return true;
   }
+
+  // const handleAccept = () => {
+  //   setOpen(false);
+  // };
+
   function IniciarSesion() {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
     if (username === "" && password === "") {
+      // setOpen(true);
       window.alert("Debe completar los datos");
     } else if (username !== "" && password === "") {
+      // setOpen(true);
       window.alert("Debe escribir su contraseña");
     } else if (username === "" && password !== "") {
+      // setOpen(true);
       window.alert("Debe escribir un nombre de usuario");
     } else {
       var validUser = validate(username, password);
       if (validUser === true) {
         window.location.href = "/admin/dashboard";
       } else {
+        // setOpen(true);
         window.alert("Usuario o contraseña invalidos");
       }
     }
@@ -118,6 +136,36 @@ export default function SignInSide() {
           </form>
         </div>
       </Grid>
+      {/* <Dialog
+        open={open}
+        onClose={handleAccept}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogContent>
+          <Warnning></Warnning>
+          <DialogContentText>Debe completar los datos</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAccept} color="secondary" autoFocus>
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog> */}
+      {/* <Dialog
+        open={open}
+        onClose={handleAccept}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogContent>
+          <Warnning></Warnning>
+          <DialogContentText>Debe escribir su contraseña</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAccept} color="secondary" autoFocus>
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog> */}
     </Grid>
   );
 }
