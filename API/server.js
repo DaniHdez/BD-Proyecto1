@@ -40,72 +40,11 @@ var plaintext = bytes.toString(CryptoJS.enc.Utf8);
 console.log(plaintext);
 **/
 
-/* ES NECESARIO REVISAR ESTE LOGIN Y CORREGIRLO
- server.post("/Usuarios/Login", async (req, res) => {
-    let user = req.param("Nombre_Usuario");
-    let pass = req.body("Contraseña");
-
-    let success;
-    try
-    {
-        let pool = await sql.connect(config);
-        let result2 = await pool.request()
-            .input('Nombre_Usuario', sql.VarChar(100), user)
-            .output('Contraseña', sql.VarChar(256))
-            .execute('Login_SP')
-        sql.close();
-
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
-    }
-    catch(err)
-    {
-        success = {"Succes": "False"};
-        console.log(err);
-    }
-    res.send(success);
- });*/
-/*
- server.get("/Medicamentos/Inventario", async (req, res) => {
-
-    try
-    {
-        let pool = await sql.connect(config);
-        let result2 = await pool.request()
-            .execute('SP_getinventario')
-        
-        sql.close();
-        //success = {"Succes": "True", "Result": result2["output"]["Status"]};
-        var success = parse(result2);
-        
-        //success = result2
-    }
-    catch(err)
-    {
-        success = {"Succes": "False", "Result": err};
-        console.log(err);
-    }
-    res.send(success);
-    console.log(req.body)
- });
-*/
-
 server.get("/Pedidos/CantidadDePedidosEnRango", async (req, res) => {
     let FechaInicial= req.body["FechaInicial"];
     let FechaFinal = req.body["FechaFinal"];
     var Date1 = new Date(FechaInicial);
     var Date2 = new Date(FechaFinal);
-    console.log(`Fechas`)
-    console.log(FechaInicial);
-    console.log(FechaFinal);
     let success;
     try
     {
@@ -348,11 +287,10 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
-        success = {"Succes": "False", "Result": err};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
-    console.log(req.body)
  });
 
  server.post("/Usuarios/POSTCliente", async (req, res) => {
@@ -379,20 +317,13 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .execute('sp_push_Cliente')
         sql.close();
 
-        result2["output"]["Password"].toString();
+        //result2["output"]["Password"].toString();
         //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
@@ -422,20 +353,11 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .execute('sp_push_Cliente_sin_fk')
         sql.close();
 
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
@@ -465,20 +387,11 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .execute('sp_push_Empleado')
         sql.close();
 
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
@@ -509,20 +422,11 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .execute('sp_push_Farmacia')
         sql.close();
 
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
@@ -530,9 +434,9 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
 
 
  server.post("/Farmacias/POSTFarmaciaxMedicamento", async (req, res) => {
-    let IdFarmacia = req.body[IdFarmacia];
-    let IdMedicamento = req.body[IdMedicamento];
-    let Stock = req.body[Stock];
+    let IdFarmacia = req.body["IdFarmacia"];
+    let IdMedicamento = req.body["IdMedicamento"];
+    let Stock = req.body["Stock"];
     let success;
     try
     {
@@ -545,28 +449,19 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .execute('sp_push_FarmaciaXMedicamento')
         sql.close();
 
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
  });
  server.post("/Farmacias/POSTFarmaciaxMedicamento_NFK", async (req, res) => {
-    let Farmacia = req.body[Farmacia];
-    let Medicamento = req.body[Medicamento];
-    let Stock = req.body[Stock];
+    let Farmacia = req.body["Farmacia"];
+    let Medicamento = req.body["Medicamento"];
+    let Stock = req.body["Stock"];
     let success;
     try
     {
@@ -579,27 +474,18 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .execute('sp_push_FarmaciaXMedicamento_sin_fk')
         sql.close();
 
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
  });
 
  server.post("/Medicamentos/POSTMarca", async (req, res) => {
-    let Nombre = req.body[Nombre];
+    let Nombre = req.body["Nombre"];
     let success;
     try
     {
@@ -611,35 +497,26 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .execute('sp_push_Marca')
         sql.close();
 
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
  });
 
  server.post("/Medicamentos/POSTMedicamento", async (req, res) => {
-    let Nombre = req.body[Nombre];
-    let Descripcion = req.body[Descripcion];
-    let DosisNinos = req.body[DosisNinos];
-    let DosisAdultos = req.body[DosisAdultos];
-    let EfectosSecundarios = req.body[EfectosSecundarios];
-    let Foto = req.body[Foto];
-    let Precio = req.body[Precio];
-    let Tipo = req.body[Tipo];
-    let IdMarca = req.body[IdMarca];
+    let Nombre = req.body["Nombre"];
+    let Descripcion = req.body["Descripcion"];
+    let DosisNinos = req.body["DosisNinos"];
+    let DosisAdultos = req.body["DosisAdultos"];
+    let EfectosSecundarios = req.body["EfectosSecundarios"];
+    let Foto = req.body["Foto"];
+    let Precio = req.body["Precio"];
+    let Tipo = req.body["Tipo"];
+    let IdMarca = req.body["IdMarca"];
     let success;
     try
     {
@@ -647,7 +524,8 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
         let result2 = await pool.request()
             .input('Nombre', sql.VarChar(256), Nombre)
             .input('Descripcion', sql.VarChar(256), Descripcion)
-            .input('DosisAdultos', sql.VarChar(256), DosisNinos)
+            .input('DosisAdultos',sql.VarChar(256),DosisAdultos)
+            .input('DosisNinos', sql.VarChar(256), DosisNinos)
             .input('EfectosSecundarios', sql.VarChar(256), EfectosSecundarios)
             .input('Foto', sql.Image, Foto) //Recomendar cambiar a varbinary(max)
             .input('Precio', sql.Money, Precio)
@@ -657,20 +535,11 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .execute('sp_push_Medicamento')
         sql.close();
 
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
@@ -678,15 +547,15 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
 
 
  server.post("/Medicamentos/POSTMedicamento_NFK", async (req, res) => {
-    let Nombre = req.body[Nombre];
-    let Descripcion = req.body[Descripcion];
-    let DosisNinos = req.body[DosisNinos];
-    let DosisAdultos = req.body[DosisAdultos];
-    let EfectosSecundarios = req.body[EfectosSecundarios];
-    let Foto = req.body[Foto];
-    let Precio = req.body[Precio];
-    let Tipo = req.body[Tipo];
-    let Marca = req.body[Marca];
+    let Nombre = req.body["Nombre"];
+    let Descripcion = req.body["Descripcion"];
+    let DosisNinos = req.body["DosisNinos"];
+    let DosisAdultos = req.body["DosisAdultos"];
+    let EfectosSecundarios = req.body["EfectosSecundarios"];
+    let Foto = req.body["Foto"];
+    let Precio = req.body["Precio"];
+    let Tipo = req.body["Tipo"];
+    let Marca = req.body["Marca"];
     let success;
     try
     {
@@ -694,7 +563,8 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
         let result2 = await pool.request()
             .input('Nombre', sql.VarChar(256), Nombre)
             .input('Descripcion', sql.VarChar(256), Descripcion)
-            .input('DosisAdultos', sql.VarChar(256), DosisNinos)
+            .input('DosisNinos', sql.VarChar(256), DosisNinos)
+            .input('DosisAdultos', sql.VarChar(256), DosisAdultos)
             .input('EfectosSecundarios', sql.VarChar(256), EfectosSecundarios)
             .input('Foto', sql.Image, Foto) //Recomendar cambiar a varbinary(max)
             .input('Precio', sql.Money, Precio)
@@ -704,32 +574,23 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .execute('sp_push_Medicamento_sin_fk')
         sql.close();
 
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
  });
 
  server.post("/Pedidos/POSTPedido", async (req, res) => {
-    let Fecha = req.body[Fecha];
-    let Estado = req.body[Estado];
-    let Monto = req.body[Monto];
-    let Tipo = req.body[Tipo];
-    let IdCliente = req.body[IdCliente];
-    let IdFarmacia = req.body[IdFarmacia];
+    let Fecha = req.body["Fecha"];
+    let Estado = req.body["Estado"];
+    let Monto = req.body["Monto"];
+    let Tipo = req.body["Tipo"];
+    let IdCliente = req.body["IdCliente"];
+    let IdFarmacia = req.body["IdFarmacia"];
 
     let success;
     try
@@ -746,31 +607,23 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .execute('sp_push_Pedido')
         sql.close();
 
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
  });
+
  server.post("/Pedidos/POSTPedido_NFK", async (req, res) => {
-    let Fecha = req.body[Fecha];
-    let Estado = req.body[Estado];
-    let Monto = req.body[Monto];
-    let Tipo = req.body[Tipo];
-    let Cliente = req.body[CedulaCliente];
-    let Farmacia = req.body[Farmacia];
+    let Fecha = req.body["Fecha"];
+    let Estado = req.body["Estado"];
+    let Monto = req.body["Monto"];
+    let Tipo = req.body["Tipo"];
+    let Cliente = req.body["CedulaCliente"];
+    let Farmacia = req.body["Farmacia"];
 
     let success;
     try
@@ -787,29 +640,20 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .execute('sp_push_Pedido_sin_fk')
         sql.close();
 
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
  });
  
  server.post("/Pedidos/POSTPedidoXMedicamento", async (req, res) => {
-    let Cantidad = req.body[Cantidad];
-    let IdPedido = req.body[IdPedido];
-    let IdMedicamento = req.body[IdMedicamento];
+    let Cantidad = req.body["Cantidad"];
+    let IdPedido = req.body["IdPedido"];
+    let IdMedicamento = req.body["IdMedicamento"];
     let success;
     try
     {
@@ -822,29 +666,20 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .execute('sp_push_PedidoXMedicamento')
         sql.close();
 
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
  });
  
  server.post("/Pedidos/POSTPedidoXMedicamento_NFK", async (req, res) => {
-    let Cantidad = req.body[Cantidad];
-    let IdPedido = req.body[IdPedido];
-    let Medicamento = req.body[Medicamento];
+    let Cantidad = req.body["Cantidad"];
+    let IdPedido = req.body["IdPedido"];
+    let Medicamento = req.body["Medicamento"];
     let success;
     try
     {
@@ -857,27 +692,19 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .execute('sp_push_PedidoXMedicamento_sin_fk')
         sql.close();
 
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
  });
  
- server.post("/Provincias/POSTProvincia", async (req, res) => {
-    let Nombre = req.body[Nombre];
+server.post("/Provincias/POSTProvincia", async (req, res) => {
+    //let Nombre = req.body[Name];
+    let Nombre = req.body["Nombre"];
     let success;
     try
     {
@@ -888,27 +715,18 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .execute('sp_push_Provincia')
         sql.close();
 
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
  });
 server.post("/Pedidos/UPDATEEstadoPedido", async (req, res) => {
-    let IdPedido = req.body[IdPedido];
-    let Estado = req.body[Estado];
+    let IdPedido = req.body["IdPedido"];
+    let Estado = req.body["Estado"];
     let success;
     try
     {
@@ -920,20 +738,11 @@ server.post("/Pedidos/UPDATEEstadoPedido", async (req, res) => {
             .execute('sp_update_EstadoPedido')
         sql.close();
 
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
@@ -941,8 +750,8 @@ server.post("/Pedidos/UPDATEEstadoPedido", async (req, res) => {
  
 
  server.post("/Pedidos/UPDATEMontoFarmacia", async (req, res) => {
-    let IdFarmacia = req.body[IdFarmacia];
-    let Monto = req.body[Monto];
+    let IdFarmacia = req.body["IdFarmacia"];
+    let Monto = req.body["Monto"];
     let success;
     try
     {
@@ -954,27 +763,16 @@ server.post("/Pedidos/UPDATEEstadoPedido", async (req, res) => {
             .execute('sp_update_MontoFarmacia')
         sql.close();
 
-        result2["output"]["Password"].toString();
-        //var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-        if(result2 === pass)
-        {
-            success = {"Succes": "True"};
-        }
-        else
-        {
-            success = {"Succes": "False"};
-        }     
+        success = {"Succes": "True", "Result": result2};
     }
     catch(err)
     {
-        success = {"Succes": "False"};
+        success = {"Succes": "False", "Result":err};
         console.log(err);
     }
     res.send(success);
  });
  
-
-
  server.listen(port, ()=> console.log(`Listening on port ${port}`))
  
 
@@ -995,7 +793,7 @@ server.post("/Pedidos/UPDATEEstadoPedido", async (req, res) => {
   * POST sp_push_Cliente                            *
   * POST sp_push_Cliente_sin_fk                     *
   * POST sp_push_Empleado                           *
-  * POST sp_push_Farmacia                           * //--------------------Preguntarle a Alejandra sobre el tipo de dato de Ubicación--------
+  * POST sp_push_Farmacia                           * //Preguntarle a Alejandra sobre el tipo de dato de Ubicación--------
   * POST sp_push_FarmaciaXMedicamento               *
   * POST sp_push_FarmaciaXMedicamento_sin_fk        *
   * POST sp_push_Marca                              *
