@@ -55,7 +55,6 @@ export default function Sucursal() {
                 KeyboardButtonProps={{
                   "aria-label": "change date"
                 }}
-                padding={borderRight}
               />
               <KeyboardDatePicker
                 disableToolbar
@@ -69,7 +68,6 @@ export default function Sucursal() {
                 KeyboardButtonProps={{
                   "aria-label": "change date"
                 }}
-                padding={borderRight}
               />
             </MuiPickersUtilsProvider>
           </CardHeader>
@@ -95,7 +93,6 @@ export default function Sucursal() {
                 KeyboardButtonProps={{
                   "aria-label": "change date"
                 }}
-                padding={borderRight}
               />
               <KeyboardDatePicker
                 disableToolbar
@@ -109,7 +106,6 @@ export default function Sucursal() {
                 KeyboardButtonProps={{
                   "aria-label": "change date"
                 }}
-                padding={borderRight}
               />
             </MuiPickersUtilsProvider>
           </CardHeader>

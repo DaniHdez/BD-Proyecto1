@@ -11,6 +11,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import MaterialTable from "material-table";
 // Popup
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -127,6 +128,17 @@ export default function TableList() {
     setSelectedDate(date);
   };
 
+  const [state, setState] = React.useState({
+    columns: [
+      { title: "Tipo", field: "type" },
+      { title: "Fecha", field: "date" },
+      { title: "Cliente", field: "client" },
+      { title: "Estado", field: "state" },
+      { title: "Detalle", field: "datail" }
+    ],
+    data: Orders
+  });
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -135,10 +147,30 @@ export default function TableList() {
             <h4 className={classes.cardTitleWhite}>Pedidos</h4>
           </CardHeader>
           <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Tipo", "Fecha", "Cliente", "Estado", "Detalle"]}
-              tableData={Orders}
+            <MaterialTable
+              title="Historial"
+              columns={state.columns}
+              data={state.data}
+              editable={{
+                onRowUpdate: (newData, oldData) =>
+                  new Promise(resolve => {
+                    setTimeout(() => {
+                      resolve();
+                      const data = [...state.data];
+                      data[data.indexOf(oldData)] = newData;
+                      setState({ ...state, data });
+                    }, 600);
+                  }),
+                onRowDelete: oldData =>
+                  new Promise(resolve => {
+                    setTimeout(() => {
+                      resolve();
+                      const data = [...state.data];
+                      data.splice(data.indexOf(oldData), 1);
+                      setState({ ...state, data });
+                    }, 600);
+                  })
+              }}
             />
             <Fab
               color="secondary"

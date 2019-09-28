@@ -4,12 +4,12 @@ import { makeStyles } from "@material-ui/core/styles";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import Table from "components/Table/Table.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import MaterialTable from "material-table";
 // Popup
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -62,6 +62,18 @@ export default function TableList() {
     multiline: ""
   });
 
+  const [state, setState] = React.useState({
+    columns: [
+      { title: "Nombre", field: "name" },
+      { title: "Marca", field: "brand" },
+      { title: "Tipo", field: "type" },
+      { title: "Foto", field: "photo" },
+      { title: "Precio", field: "price" },
+      { title: "Cantidad", field: "quantity" }
+    ],
+    data: Medicines
+  });
+
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
@@ -89,10 +101,30 @@ export default function TableList() {
             </p>
           </CardHeader>
           <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Nombre", "Marca", "Tipo", "Foto", "Precio"]}
-              tableData={Medicines}
+            <MaterialTable
+              title="Disponible"
+              columns={state.columns}
+              data={state.data}
+              editable={{
+                onRowUpdate: (newData, oldData) =>
+                  new Promise(resolve => {
+                    setTimeout(() => {
+                      resolve();
+                      const data = [...state.data];
+                      data[data.indexOf(oldData)] = newData;
+                      setState({ ...state, data });
+                    }, 600);
+                  }),
+                onRowDelete: oldData =>
+                  new Promise(resolve => {
+                    setTimeout(() => {
+                      resolve();
+                      const data = [...state.data];
+                      data.splice(data.indexOf(oldData), 1);
+                      setState({ ...state, data });
+                    }, 600);
+                  })
+              }}
             />
             <Fab
               color="secondary"
