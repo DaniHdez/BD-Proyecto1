@@ -56,15 +56,13 @@ const useStyles = makeStyles(styles);
 export default function TableList() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [open2, setOpen2] = React.useState(false);
 
   const handleClick = () => {
     setOpen(true);
   };
 
   const handlePopClickCancel = () => {
-    //setOpen(false);
-    setOpen2(true);
+    setOpen(false);
   };
 
   const handlePopClickAccept = () => {
@@ -92,15 +90,6 @@ export default function TableList() {
       window.alert("Debe llenar todos los campos");
       setOpen(true);
     }
-  };
-
-  const handleReturnConfirmation = () => {
-    setOpen2(false);
-  };
-
-  const handleAcceptConfirmation = () => {
-    setOpen2(false);
-    setOpen(false);
   };
 
   return (
@@ -202,29 +191,6 @@ export default function TableList() {
           </Button>
           <Button onClick={handlePopClickAccept} color="primary">
             Añadir
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        open2={open2}
-        onClose={handleAcceptConfirmation}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Seguro que desea cancelar?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Si cancela los datos del nuevo cliente se perderán.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleReturnConfirmation} color="primary">
-            Volver
-          </Button>
-          <Button onClick={handleAcceptConfirmation} color="primary" autoFocus>
-            Aceptar
           </Button>
         </DialogActions>
       </Dialog>
