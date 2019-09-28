@@ -85,8 +85,26 @@ const currencies = [
     label: "¥"
   }
 ];
+//Ejemplo formato
+var Medicines = [
+  {
+    name: "Aspirina",
+    brand: "Bayern",
+    type: "Analgesico",
+    photo: "Aca va la foto",
+    price: "$3",
+    quantity: "6"
+  },
+  {
+    name: "Cataflam",
+    brand: "Bayern",
+    type: "Analgesico",
+    photo: "Aca va la foto",
+    price: "$3",
+    quantity: "6"
+  }
+];
 
-var Medicines = [];
 var Orders = [];
 var Clients = [];
 //Se deben traer los clientes de la base
