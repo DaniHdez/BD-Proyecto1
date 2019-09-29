@@ -21,17 +21,21 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 
-import { tipoSJ, tipoC, tipoH, topClient } from "variables/general.js";
+import { tipoSJ, tipoC, tipoH, topClient, GetTopClientes, GETMontoParaTipoDePedido_SJ} from "variables/general.js";
 
 import {
   montoRecaudadoSucursalChart,
   montoRecaudadoTipoChart,
-  clientesSucursalChart
+  clientesSucursalChart,
+  GETRecaudadoPorSucursal_todas,
+  GETRecaudadoParaTipoDePedido_ambos
 } from "variables/charts.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
 const useStyles = makeStyles(styles);
+
+
 
 export default function Dashboard() {
   const classes = useStyles();
@@ -40,6 +44,7 @@ export default function Dashboard() {
       <GridContainer>
         <GridItem xs={12} sm={6} md={4}>
           <Card>
+            
             <CardHeader color="warning" stats icon>
               <CardIcon color="warning">
                 <Icon>room</Icon>
@@ -56,13 +61,13 @@ export default function Dashboard() {
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6} md={4}>
-          <Card>
+          <Card >
             <CardHeader color="success" stats icon>
               <CardIcon color="success">
                 <AttachMoney />
               </CardIcon>
               <p className={classes.cardCategory}>Recaudado</p>
-              <h3 className={classes.cardTitle}>$34,245</h3>
+              <h3 className={classes.cardTitle}>+$3.000</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -96,7 +101,7 @@ export default function Dashboard() {
             <CardHeader color="success">
               <ChartistGraph
                 className="ct-chart"
-                data={montoRecaudadoSucursalChart.data}
+                data={GETRecaudadoPorSucursal_todas()}
                 type="Bar"
                 options={montoRecaudadoSucursalChart.options}
                 responsiveOptions={
@@ -124,7 +129,7 @@ export default function Dashboard() {
             <CardHeader color="warning">
               <ChartistGraph
                 className="ct-chart"
-                data={montoRecaudadoTipoChart.data}
+                data={GETRecaudadoParaTipoDePedido_ambos()}
                 type="Bar"
                 options={montoRecaudadoTipoChart.options}
                 responsiveOptions={montoRecaudadoTipoChart.responsiveOptions}
@@ -172,7 +177,7 @@ export default function Dashboard() {
                   <Table
                     tableHeaderColor="primary"
                     tableHead={["Tipo", "Recaudado"]}
-                    tableData={tipoSJ}
+                    tableData={GETMontoParaTipoDePedido_SJ()}
                   />
                 )
               },
@@ -209,7 +214,7 @@ export default function Dashboard() {
               <Table
                 tableHeaderColor="warning"
                 tableHead={["Nombre", "Categoria", "Sucursal"]}
-                tableData={topClient}
+                tableData={GetTopClientes()}
               />
             </CardBody>
           </Card>

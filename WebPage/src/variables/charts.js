@@ -8,12 +8,12 @@ var delays2 = 100,
 // // // Monto recaudado Sucursal
 // #############################
 //Falta traerlo de la base de datos
-const mrSJ = 1000;
-const mrC = 500;
-const mrH = 6000;
+var mrSJ = 1000;
+var mrC = 500;
+var mrH = 6000;
 //Talvez una funcin para definir el punto mas bajo y mas alto apartir de los valores obtenidos de la api
 
-const montoRecaudadoSucursalChart = {
+var montoRecaudadoSucursalChart = {
   data: {
     labels: ["San José", "Cartago", "Heredia"],
     series: [[mrSJ, mrC, mrH]]
@@ -61,9 +61,13 @@ const montoRecaudadoSucursalChart = {
   }
 };
 
+
+
+
+
 // ##############################
 // // // Monto recaudado Tipo
-// #############################
+// ####################################################################################################################
 //Falta traerlo de la base de datos
 const mrR = 1000;
 const mrE = 500;
@@ -175,8 +179,102 @@ const clientesSucursalChart = {
   }
 };
 
-module.exports = {
+var exported = module.exports = {
   montoRecaudadoSucursalChart,
   montoRecaudadoTipoChart,
   clientesSucursalChart
 };
+
+
+exported.GETRecaudadoPorSucursal_todas = function () { //Falta comprobar que el SP sirve
+  // code to be executed
+//request_response;
+var CedJuridica1 = 384612874;
+var CedJuridica2 = 378659898;
+var CedJuridica3 = 377768778;
+//var recaudation = 0;
+
+var xhr = new window.XMLHttpRequest()
+var request_response;
+xhr.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+      request_response = JSON.parse(this.responseText);
+      console.log("request_response_recaudation");
+      console.log(request_response);
+      montoRecaudadoSucursalChart.data.series[0][0] = parseFloat(request_response.Result1.recordset[0]["TotalRecaudado"])
+      montoRecaudadoSucursalChart.data.series[0][1] = parseFloat(request_response.Result2.recordset[0]["TotalRecaudado"])
+      montoRecaudadoSucursalChart.data.series[0][2] = parseFloat(request_response.Result3.recordset[0]["TotalRecaudado"])
+      console.log("Totales Recaudados");
+      console.log(request_response.Result1.recordset[0]["TotalRecaudado"])
+      console.log(request_response.Result2.recordset[0]["TotalRecaudado"])
+      console.log(request_response.Result3.recordset[0]["TotalRecaudado"])
+  }
+};
+
+
+xhr.open('POST', 'http://localhost:8080/Sucursal/GetDineroRecaudadoEnSucursal_Todas', false)
+let values = { 
+  CedJuridica1: CedJuridica1,
+  CedJuridica2: CedJuridica2,
+  CedJuridica3: CedJuridica3
+};
+
+var to_send_json = JSON.stringify(values);
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.send(to_send_json)
+
+
+return montoRecaudadoSucursalChart.data;
+
+}
+
+
+exported.GETRecaudadoParaTipoDePedido_ambos = function () { //Falta comprobar que el SP sirve
+  // code to be executed
+//request_response;
+var CedJuridica1 = 384612874;
+var CedJuridica2 = 378659898;
+var CedJuridica3 = 377768778;
+//var recaudation = 0;
+
+var xhr = new window.XMLHttpRequest()
+var request_response;
+xhr.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+      request_response = JSON.parse(this.responseText);
+      console.log("request_response_recaudation_types");
+      console.log(request_response);
+      try{
+      montoRecaudadoTipoChart.data.series[0][0] = parseFloat(request_response.Result1.recordset[0]["Monto"]);
+      }catch{
+        montoRecaudadoTipoChart.data.series[0][0] = 0;
+      }
+      try{
+        montoRecaudadoTipoChart.data.series[0][1] = parseFloat(request_response.Result2.recordset[0]["Monto"]);
+      }catch{
+        montoRecaudadoTipoChart.data.series[0][1] = 0;
+      }
+      //montoRecaudadoTipoChart.data.series[0][2] = parseFloat(request_response.Result3.recordset[0]["TotalRecaudado"])
+      
+      //console.log(request_response.Result3.recordset[0]["TotalRecaudado"])
+  }
+};
+
+
+xhr.open('POST', 'http://localhost:8080/Montos/GetMontoParaTipoDePedido_ambos', false)
+let values = { 
+  FechaInicial: "01/01/98 23:59:59",
+  FechaFinal: "01/01/25 23:59:59",
+  Tipo1: 1,
+  Tipo2: 2
+};
+
+var to_send_json = JSON.stringify(values);
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.send(to_send_json)
+
+
+return montoRecaudadoTipoChart.data;
+
+}
+

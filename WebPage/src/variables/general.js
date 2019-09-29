@@ -3,17 +3,17 @@
 // #############################
 
 //Falta traer datos de base de datos de cantidad recaudado por sucursal por tipo
-const pedidosSJ = 17;
-const pedidosEspecialesSJ = 17;
-const pedidosC = 17;
-const pedidosEspecialesC = 17;
-const pedidosH = 17;
-const pedidosEspecialesH = 17;
+var pedidosSJ = 17;
+var pedidosEspecialesSJ = 17;
+var pedidosC = 17;
+var pedidosEspecialesC = 17;
+var pedidosH = 17;
+var pedidosEspecialesH = 17;
 
 //Traer los tres mejores clientes generales
-const clientOneName = "Pablo";
-const clientOneType = "Oro";
-const clientOnePharmacy = "SJ";
+var clientOneName = "Pablo2"
+var clientOneType = "Oro";
+var clientOnePharmacy = "SJ";
 
 //Traer los mejores clientes por sucursal
 const clientSJName = "Jesus";
@@ -31,6 +31,7 @@ var topClient = [
   [clientOneName, clientOneType, clientOnePharmacy],
   [clientOneName, clientOneType, clientOnePharmacy]
 ];
+
 
 var topClientSJ = [
   [clientSJName, clientSJType, noPedidosSJ],
@@ -129,7 +130,7 @@ const medicines = [
   { value: "regular", label: "Regular" }
 ];
 
-module.exports = {
+var exported = module.exports = {
   tipoSJ,
   tipoH,
   tipoC,
@@ -146,3 +147,134 @@ module.exports = {
   orderType,
   medicines
 };
+
+exported.GetTopClientes = function () { //FUcking READY
+  // code to be executed
+//request_response;
+var xhr = new window.XMLHttpRequest()
+var request_response;
+xhr.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+      //request_response = JSON.parse(this.responseText);
+      request_response = JSON.parse(this.responseText);
+      //Nombre,tipo,farmacia
+      try{
+      topClient[0][0] = request_response.Result.recordset[0]["Nombre"];
+      topClient[0][1] = request_response.Result.recordset[0]["tipo"];
+      topClient[0][2] = "Central";
+      }
+      catch{
+        topClient[0][0] = "N/A";
+        topClient[0][1] = "N/A";
+        topClient[0][2] = "N/A";
+        topClient[1][0] = "N/A";
+        topClient[1][1] = "N/A";
+        topClient[1][2] = "N/A";
+        topClient[2][0] = "N/A";
+        topClient[2][1] = "N/A";
+        topClient[2][2] = "N/A";
+
+      }
+      try{
+      topClient[1][0] = request_response.Result.recordset[1]["Nombre"];
+      topClient[1][1] = request_response.Result.recordset[1]["tipo"];
+      topClient[1][2] = "Central";
+      }catch{
+        topClient[1][0] = "N/A";
+        topClient[1][1] = "N/A";
+        topClient[1][2] = "N/A";
+        topClient[2][0] = "N/A";
+        topClient[2][1] = "N/A";
+        topClient[2][2] = "N/A";
+      }
+      try{
+      topClient[2][0] = request_response.Result.recordset[2]["Nombre"];
+      topClient[2][1] = request_response.Result.recordset[2]["tipo"];
+      topClient[2][2] = "Central";
+      }catch{
+        topClient[2][0] = "N/A";
+        topClient[2][1] = "N/A";
+        topClient[2][2] = "N/A";
+      }
+  }
+};
+let FechaInicial= "01/01/98 23:59:59";
+let FechaFinal= "01/01/25 23:59:59";
+
+xhr.open('POST', 'http://localhost:8080/Clientes/GETTopClientes', false)
+let values = { 
+  FechaInicial: FechaInicial, 
+  FechaFinal:FechaFinal 
+};
+
+var to_send_json = JSON.stringify(values);
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.send(to_send_json)
+
+return topClient;
+
+}
+
+
+exported.GETMontoParaTipoDePedido_SJ = function () { //Falta comprobar que el SP sirve
+  // code to be executed
+//request_response;
+
+var xhr = new window.XMLHttpRequest()
+var request_response;
+xhr.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+      request_response = JSON.parse(this.responseText);
+      console.log("request_response_Trying_HARD");
+      console.log(request_response);
+  }
+};
+
+
+xhr.open('POST', 'http://localhost:8080/Montos/MontoRecaudadoPorSucursal', false)
+let values = { 
+  CedJuridica: 384612874,
+  Tipo1: 1,
+  Tipo2: 2
+};
+
+var to_send_json = JSON.stringify(values);
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.send(to_send_json)
+
+
+return tipoSJ;
+
+}
+
+exported.GETRecaudadoPorSucursal = function () { //Falta comprobar que el SP sirve
+  // code to be executed
+//request_response;
+var CedJuridica = 384612874;
+var recaudation = 0;
+
+var xhr = new window.XMLHttpRequest()
+var request_response;
+xhr.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+      request_response = JSON.parse(this.responseText);
+      console.log("request_response_recaudation");
+      console.log(request_response);
+  }
+};
+
+
+xhr.open('POST', 'http://localhost:8080/Sucursal/GetDineroRecaudadoEnSucursal', false)
+let values = { 
+  CedJuridica: CedJuridica
+};
+
+var to_send_json = JSON.stringify(values);
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.send(to_send_json)
+
+
+return recaudation;
+
+}
+
