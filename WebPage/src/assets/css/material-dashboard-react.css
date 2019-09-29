@@ -516,11 +516,26 @@ div.fab {
   margin-top: 5px;
 }
 
+div.date {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 5px;
+}
+
 h4.cardClient {
+  color: "#fafafa";
+}
+
+h3.cardClient {
   color: "#fafafa";
 }
 
 h3.cardBodyClient {
   display: flex;
   justify-content: center;
+}
+
+h4.cardSucursal {
+  color: "#212121";
+  margin-top: 2px;
 }

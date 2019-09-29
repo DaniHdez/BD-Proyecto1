@@ -25,7 +25,9 @@ import Admin from "layouts/Admin.js";
 import SignIn from "views/SignIn/SignIn.js";
 import Client from "layouts/Client.js";
 import Employee from "layouts/Employee.js";
-import AdminSucursal from "layouts/AdminSucursal.js";
+import Local from "layouts/Local.js";
+
+// import Sucursal from "layouts/Sucursal.js";
 
 import "assets/css/material-dashboard-react.css?v=1.8.0";
 
@@ -38,7 +40,7 @@ ReactDOM.render(
       <Route path="/signin" component={SignIn} />
       <Route path="/client" component={Client} />
       <Route path="/employee" component={Employee} />
-      <Route path="/adminsucursal" component={AdminSucursal} />
+      <Route path="/local" component={Local} />
     </Switch>
   </Router>,
   document.getElementById("root")
