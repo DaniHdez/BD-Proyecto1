@@ -26,6 +26,7 @@ import MedListTable from "views/Medicines/MedListTable.js";
 import Sucursal from "views/Sucursales/Sucursal.js";
 import Clients from "views/Clients/Clients.js";
 import Orders from "views/Orders/Orders.js";
+import Empleados from "views/EmployeeTables/TabEmployee.js";
 
 const dashboardRoutes = [
   {
@@ -63,6 +64,13 @@ const dashboardRoutes = [
     name: "Pedidos",
     icon: LibraryBooks,
     component: Orders,
+    layout: "/admin"
+  },
+  {
+    path: "/empleados",
+    name: "Empleados",
+    icon: Persons,
+    component: Empleados,
     layout: "/admin"
   }
 ];

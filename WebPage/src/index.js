@@ -26,6 +26,7 @@ import SignIn from "views/SignIn/SignIn.js";
 import Client from "layouts/Client.js";
 import Employee from "layouts/Employee.js";
 import Local from "layouts/Local.js";
+import Register from "views/Register/Register.js";
 
 // import Sucursal from "layouts/Sucursal.js";
 
@@ -41,6 +42,7 @@ ReactDOM.render(
       <Route path="/client" component={Client} />
       <Route path="/employee" component={Employee} />
       <Route path="/local" component={Local} />
+      <Route path="/register" component={Register} />
     </Switch>
   </Router>,
   document.getElementById("root")
