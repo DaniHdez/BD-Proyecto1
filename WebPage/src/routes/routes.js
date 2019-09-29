@@ -22,7 +22,6 @@ import Pharmacy from "@material-ui/icons/LocalPharmacy";
 import Persons from "@material-ui/icons/People";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
-import ClientDashboard from "views/Dashboard/ClientDashboard.js";
 import MedListTable from "views/Medicines/MedListTable.js";
 import Sucursal from "views/Sucursales/Sucursal.js";
 import Clients from "views/Clients/Clients.js";

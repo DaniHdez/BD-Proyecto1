@@ -10,7 +10,7 @@ import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
-import routes from "routes/routesEmployee.js";
+import routes from "routes/routesLocal.js";
 
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 
@@ -22,7 +22,7 @@ let ps;
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
-      if (prop.layout === "/employee") {
+      if (prop.layout === "/local") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -33,13 +33,13 @@ const switchRoutes = (
       }
       return null;
     })}
-    <Redirect from="/employee" to="/employee/pedidos" />
+    <Redirect from="/local" to="/local/dashboard" />
   </Switch>
 );
 
 const useStyles = makeStyles(styles);
 
-export default function Client({ ...rest }) {
+export default function Local({ ...rest }) {
   // styles
   const classes = useStyles();
   // ref to help us initialize PerfectScrollbar on windows devices
@@ -54,7 +54,7 @@ export default function Client({ ...rest }) {
     setMobileOpen(!mobileOpen);
   };
   const getRoute = () => {
-    return window.location.pathname !== "/employee/pedidos";
+    return window.location.pathname !== "/local/dashboard";
   };
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
