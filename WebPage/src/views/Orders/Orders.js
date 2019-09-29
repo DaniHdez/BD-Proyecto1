@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import Table from "components/Table/Table.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
@@ -77,7 +76,7 @@ const useStyles = makeStyles(theme => ({
 export default function TableList() {
   const classes = useStyles();
 
-  const [open, setOpen, open2, setOpen2] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
     setOpen(true);
@@ -172,14 +171,16 @@ export default function TableList() {
                   })
               }}
             />
-            <Fab
-              color="secondary"
-              aria-label="add"
-              className={classes.fab}
-              onClick={handleClick}
-            >
-              <AddIcon />
-            </Fab>
+            <div class="fab">
+              <Fab
+                color="secondary"
+                aria-label="add"
+                className={classes.fab}
+                onClick={handleClick}
+              >
+                <AddIcon />
+              </Fab>
+            </div>
           </CardBody>
         </Card>
       </GridItem>
