@@ -5,6 +5,72 @@
 USE FarmaTEC
 GO
 
+
+
+/**************** GET ID CENTRAL ****************/
+CREATE PROCEDURE sp_getid_Farmacia
+AS
+BEGIN
+	DECLARE @ID INT
+	SELECT @ID = COUNT(*) FROM Farmacia
+	RETURN @ID
+END
+GO
+
+CREATE PROCEDURE sp_getid_Marca
+AS
+BEGIN
+	DECLARE @ID INT
+	SELECT @ID = COUNT(*) FROM Marca
+	RETURN @ID
+END
+GO
+
+CREATE PROCEDURE sp_getid_Provincia
+AS
+BEGIN
+	DECLARE @ID INT
+	SELECT @ID = COUNT(*) FROM Provincia
+	RETURN @ID
+END
+GO
+
+CREATE PROCEDURE sp_getid_Pedido
+AS
+BEGIN
+	DECLARE @ID INT
+	SELECT @ID = COUNT(*) FROM Pedido
+	RETURN @ID
+END
+GO
+
+
+CREATE PROCEDURE sp_getid_Empleado
+AS
+BEGIN
+	DECLARE @ID INT
+	SELECT @ID = COUNT(*) FROM Empleado
+	RETURN @ID
+END
+GO
+
+CREATE PROCEDURE sp_getid_Cliente
+AS
+BEGIN
+	DECLARE @ID INT
+	SELECT @ID = COUNT(*) FROM Cliente
+	RETURN @ID
+END
+GO
+
+CREATE PROCEDURE sp_getid_Medicamento
+AS
+BEGIN
+	DECLARE @ID INT
+	SELECT @ID = COUNT(*) FROM Medicamento
+	RETURN @ID
+END
+GO
 /***************** PUSH ******************/
 
 /* Marca */
@@ -12,17 +78,24 @@ CREATE PROCEDURE sp_push_Marca
 	@Nombre VARCHAR(MAX)
 AS
 BEGIN
-	INSERT INTO Marca(Nombre) VALUES (@Nombre)
+	DECLARE @ID INT
+	EXECUTE @ID = dbo.sp_getid_Marca
+	INSERT INTO Marca(Id, Nombre) VALUES (@ID, @Nombre)
 END
 GO
+
 /* Provincia */
 CREATE PROCEDURE sp_push_Provincia
 	@Nombre VARCHAR(MAX)
 AS
 BEGIN
-	INSERT INTO Provincia(Nombre) VALUES (@Nombre)
+	DECLARE @ID INT;
+	EXECUTE @ID = dbo.sp_getid_Provincia
+	INSERT INTO Provincia(Id, Nombre) VALUES (@ID, @Nombre)
 END
 GO
+
+
 /* Farmacia*/
 CREATE PROCEDURE sp_push_Farmacia
 	@Nombre VARCHAR(MAX),
@@ -36,15 +109,18 @@ CREATE PROCEDURE sp_push_Farmacia
 	@Provincia VARCHAR(MAX)
 AS
 BEGIN
+	DECLARE @ID INT;
+	EXECUTE @ID = dbo.sp_getid_Farmacia
 	DECLARE @Ubicacion geography;
 	SET @Ubicacion = geography::Point(@PuntoA, @PuntoB, '4326');
 	DECLARE @IdProvincia INT;
 	SET @IdProvincia=0;
 	SELECT @IdProvincia=Id FROM Provincia WHERE Nombre=@Provincia;
-	INSERT INTO Farmacia (Nombre,CedJuridica,Ubicacion,Telefono,Correo,Horario,TotalRecaudado,IdProvincia)  
-	VALUES (@Nombre,@CedJuridica,@Ubicacion,@Telefono,@Correo,@Horario,@TotalRecaudado,@IdProvincia)
+	INSERT INTO Farmacia (Id, Nombre,CedJuridica,Ubicacion,Telefono,Correo,Horario,TotalRecaudado,IdProvincia)  
+	VALUES (@ID,@Nombre,@CedJuridica,@Ubicacion,@Telefono,@Correo,@Horario,@TotalRecaudado,@IdProvincia)
 END
 GO
+
 /* Empleado */
 CREATE PROCEDURE sp_push_Empleado
 	@Nombre VARCHAR(MAX),
@@ -57,12 +133,14 @@ CREATE PROCEDURE sp_push_Empleado
 	@CedJurídica BIGINT
 AS
 BEGIN
+	DECLARE @ID INT
+	EXECUTE @ID = dbo.sp_getid_Empleado
 	DECLARE @IdFarmacia INT;
 	SET @IdFarmacia=0;
 	SELECT @IdFarmacia=Id FROM Farmacia WHERE CedJuridica=@CedJurídica;
 	PRINT (@IdFarmacia);
-	INSERT INTO Empleado(Nombre,Apellido1,Apellido2,Tipo,Estado,Correo,Contraseña,IdFarmacia)  
-	VALUES (@Nombre,@Apellido1,@Apellido2,@Tipo,@Estado,@Correo,@Contraseña,@IdFarmacia)
+	INSERT INTO Empleado(Id, Nombre,Apellido1,Apellido2,Tipo,Estado,Correo,Contraseña,IdFarmacia)  
+	VALUES (@ID,@Nombre,@Apellido1,@Apellido2,@Tipo,@Estado,@Correo,@Contraseña,@IdFarmacia)
 END
 GO
 /* Cliente */
@@ -76,11 +154,13 @@ CREATE PROCEDURE sp_push_Cliente
 	@Provincia VARCHAR(MAX)
 AS
 BEGIN
+	DECLARE @ID INT
+	EXECUTE @ID = dbo.sp_getid_Cliente
 	DECLARE @IdProvincia INT;
 	SET @IdProvincia = 1;
 	SELECT @IdProvincia=Id FROM Provincia WHERE Nombre=@Provincia;
-	INSERT INTO Cliente(Cedula,Nombre,Apellido1,Apellido2,Telefono,Tipo,IdProvincia)
-	VALUES (@Cedula,@Nombre,@Apellido1,@Apellido2,@Telefono,@Tipo,@IdProvincia)
+	INSERT INTO Cliente(Id,Cedula,Nombre,Apellido1,Apellido2,Telefono,Tipo,IdProvincia)
+	VALUES (@ID,@Cedula,@Nombre,@Apellido1,@Apellido2,@Telefono,@Tipo,@IdProvincia)
 END
 GO
 /* Medicamento */
@@ -97,11 +177,13 @@ CREATE PROCEDURE sp_push_Medicamento
 	@Marca VARCHAR(MAX)
 AS
 BEGIN
+	DECLARE @ID INT
+	EXECUTE @ID = dbo.sp_getid_Medicamento
 	DECLARE @IdMarca INT;
 	SET @IdMarca = 1;
 	SELECT @IdMarca=Id FROM Marca WHERE Nombre=@Marca;
-	INSERT INTO Medicamento(Nombre,CodigoDeMedicamento,Descripcion,DosisNinos,DosisAdultos,EfectosSecundarios,Foto,Precio,Tipo,IdMarca)
-	VALUES (@Nombre,@CodigoDeMedicamento,@Descripcion,@DosisNinos,@DosisAdultos,@EfectosSecundarios,@Foto,@Precio,@Tipo,@IdMarca)
+	INSERT INTO Medicamento(Id, Nombre,CodigoDeMedicamento,Descripcion,DosisNinos,DosisAdultos,EfectosSecundarios,Foto,Precio,Tipo,IdMarca)
+	VALUES (@ID,@Nombre,@CodigoDeMedicamento,@Descripcion,@DosisNinos,@DosisAdultos,@EfectosSecundarios,@Foto,@Precio,@Tipo,@IdMarca)
 END
 GO
 /* FarmaciaXMedicamento */
@@ -142,14 +224,16 @@ CREATE PROCEDURE sp_push_Pedido
 	@CodigoPedido VARCHAR(MAX)
 AS
 BEGIN
+	DECLARE @ID INT
+	EXECUTE @ID = dbo.sp_getid_Pedido
 	DECLARE @IdFarmacia INT;
 	SET @IdFarmacia = 0;
 	SELECT @IdFarmacia=Id FROM Farmacia WHERE CedJuridica=@CedJuridica;
 	DECLARE @IdCliente INT;
 	SET @IdCliente = 0;
 	SELECT @IdCliente=Id FROM Cliente WHERE Cedula=@CedulaCliente;
-	INSERT INTO Pedido(Fecha,Estado,Monto,CodigoPedido,Tipo,IdCliente,IdFarmacia)
-	VALUES (@Fecha,@Estado,@Monto,@CodigoPedido,@Tipo,@IdCliente,@IdFarmacia);
+	INSERT INTO Pedido(Id,Fecha,Estado,Monto,CodigoPedido,Tipo,IdCliente,IdFarmacia)
+	VALUES (@ID,@Fecha,@Estado,@Monto,@CodigoPedido,@Tipo,@IdCliente,@IdFarmacia);
 END
 GO
 /* PedidoXMedicamento*/
