@@ -4,7 +4,7 @@ const server = express();
 const port = 8080;
 const sql = require('mssql');
 //var CryptoJS = require("crypto-js");
-
+server.use(bodyParser.urlencoded({extended: false}))
 server.use(bodyParser.json());
 
 //CORS Middleware
@@ -40,7 +40,7 @@ var plaintext = bytes.toString(CryptoJS.enc.Utf8);
 console.log(plaintext);
 **/
 
-server.get("/Pedidos/CantidadDePedidosEnRango", async (req, res) => {
+server.post("/Pedidos/CantidadDePedidosEnRango", async (req, res) => {
     let FechaInicial= req.body["FechaInicial"];
     let FechaFinal = req.body["FechaFinal"];
     var Date1 = new Date(FechaInicial);
@@ -59,6 +59,7 @@ server.get("/Pedidos/CantidadDePedidosEnRango", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result": err};
         console.log(err);
     }
@@ -66,7 +67,7 @@ server.get("/Pedidos/CantidadDePedidosEnRango", async (req, res) => {
     console.log(req.body)
  });
 
-server.get("/Usuarios/GetCliente", async (req, res) => {
+server.post("/Usuarios/GetCliente", async (req, res) => {
     let Cedula= req.body["Cedula"];
     
     let success;
@@ -82,6 +83,7 @@ server.get("/Usuarios/GetCliente", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result": err};
         console.log(err);
     }
@@ -89,7 +91,7 @@ server.get("/Usuarios/GetCliente", async (req, res) => {
     console.log(req.body)
  });
 
-server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
+server.post("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     let ID= req.body["ID"];
     
     let success;
@@ -105,6 +107,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result": err};
         console.log(err);
     }
@@ -114,7 +117,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
  
  
  
- server.get("/Sucursal/GetDineroRecaudadoEnSucursal_NFK", async (req, res) => {
+ server.post("/Sucursal/GetDineroRecaudadoEnSucursal_NFK", async (req, res) => {
     let Farmacia= req.body["Farmacia"];
     
     let success;
@@ -130,6 +133,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result": err};
         console.log(err);
     }
@@ -137,7 +141,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     console.log(req.body)
  }); 
  
- server.get("/Montos/GetMontoEnFarmaciaSegunTipoDePedido", async (req, res) => {
+ server.post("/Montos/GetMontoEnFarmaciaSegunTipoDePedido", async (req, res) => {
     let IDFarmacia= req.body["IdFarmacia"];
     let Tipo= req.body["Tipo"]
     let success;
@@ -154,6 +158,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result": err};
         console.log(err);
     }
@@ -161,7 +166,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     console.log(req.body)
  }); 
 
- server.get("/Montos/GetMontoParaTipoDePedido", async (req, res) => {
+ server.post("/Montos/GetMontoParaTipoDePedido", async (req, res) => {
     let FechaInicial= req.body["FechaInicial"];
     let FechaFinal= req.body["FechaFinal"];
     let Tipo= req.body["Tipo"]
@@ -182,6 +187,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result": err};
         console.log(err);
     }
@@ -189,7 +195,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     console.log(req.body)
  }); 
 
- server.get("/Montos/GETMontoPromedioXCadaClienteEnRango", async (req, res) => {
+ server.post("/Montos/GETMontoPromedioXCadaClienteEnRango", async (req, res) => {
     let FechaInicial= req.body["FechaInicial"];
     let FechaFinal= req.body["FechaFinal"];
     var Date1 = new Date(FechaInicial);
@@ -208,6 +214,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result": err};
         console.log(err);
     }
@@ -216,7 +223,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
  });
 
 
- server.get("/Montos/GETMontoPromedioXClientesEnRango", async (req, res) => {
+ server.post("/Montos/GETMontoPromedioXClientesEnRango", async (req, res) => {
     let FechaInicial= req.body["FechaInicial"];
     let FechaFinal= req.body["FechaFinal"];
     var Date1 = new Date(FechaInicial);
@@ -235,6 +242,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result": err};
         console.log(err);
     }
@@ -242,7 +250,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     console.log(req.body)
  });
  
- server.get("/Pedidos/GETPedidosEnRango", async (req, res) => {
+ server.post("/Pedidos/GETPedidosEnRango", async (req, res) => {
     let FechaInicial= req.body["FechaInicial"];
     let FechaFinal= req.body["FechaFinal"];
     var Date1 = new Date(FechaInicial);
@@ -261,6 +269,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result": err};
         console.log(err);
     }
@@ -268,11 +277,17 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     console.log(req.body)
  });
 
- server.get("/Clientes/GETTopClientes", async (req, res) => {
+ server.post("/Clientes/GETTopClientes", async (req, res) => {
+
+    console.log("REQ:");
+    console.log(req);
     let FechaInicial= req.body["FechaInicial"];
     let FechaFinal= req.body["FechaFinal"];
     var Date1 = new Date(FechaInicial);
     var Date2 = new Date(FechaFinal);
+    console.log("Fechas");
+    console.log(FechaInicial);
+    console.log(FechaFinal);
     let success;
     try
     {
@@ -287,9 +302,11 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
+    console.log(success);
     res.send(success);
  });
 
@@ -323,6 +340,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -357,6 +375,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -391,6 +410,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -402,7 +422,8 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     let Nombre = req.body["Nombre"];
     let Correo = req.body['Correo'];
     let CedJuridica = req.body['CedJuridica'];
-    let Ubicacion = req.body['Ubicacion'];
+    let PuntoA = req.body['PuntoA'];
+    let PuntoB = req.body['PuntoB'];
     let Telefono = req.body['Telefono'];
     let Horario = req.body['Horario'];
     let TotalRecaudado = req.body['TotalRecaudado'];
@@ -414,7 +435,8 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .input('Nombre', sql.VarChar(256), Nombre)
             .input('CedJuridica', sql.BigInt, CedJuridica)
             .input('Correo', sql.VarChar(256), Correo)
-            .input('Ubicacion', sql.VarChar(256), Ubicacion)
+            .input('PuntoA', sql.VarChar(256), PuntoA)
+            .input('PuntoB', sql.VarChar(256), PuntoB)
             .input('Telefono', sql.BigInt, Telefono)
             .input('Horario', sql.VarChar(256), Horario)
             .input('TotalRecaudado', sql.Money, TotalRecaudado)
@@ -426,6 +448,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -453,6 +476,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -478,6 +502,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -501,6 +526,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -527,7 +553,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .input('DosisAdultos',sql.VarChar(256),DosisAdultos)
             .input('DosisNinos', sql.VarChar(256), DosisNinos)
             .input('EfectosSecundarios', sql.VarChar(256), EfectosSecundarios)
-            .input('Foto', sql.Image, Foto) //Recomendar cambiar a varbinary(max)
+            .input('Foto', sql.VarBinary, Foto) //Recomendar cambiar a varbinary(max)
             .input('Precio', sql.Money, Precio)
             .input('Tipo', sql.int, Tipo)
             .input('IdMarca', sql.int, IdMarca)
@@ -539,6 +565,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -566,7 +593,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .input('DosisNinos', sql.VarChar(256), DosisNinos)
             .input('DosisAdultos', sql.VarChar(256), DosisAdultos)
             .input('EfectosSecundarios', sql.VarChar(256), EfectosSecundarios)
-            .input('Foto', sql.Image, Foto) //Recomendar cambiar a varbinary(max)
+            .input('Foto', sql.VarBinary, Foto) //Recomendar cambiar a varbinary(max)
             .input('Precio', sql.Money, Precio)
             .input('Tipo', sql.int, Tipo)
             .input('Marca', sql.int, Marca)
@@ -578,6 +605,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -611,6 +639,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -644,6 +673,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -670,6 +700,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -696,6 +727,7 @@ server.get("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -719,6 +751,7 @@ server.post("/Provincias/POSTProvincia", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -742,6 +775,7 @@ server.post("/Pedidos/UPDATEEstadoPedido", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -767,6 +801,7 @@ server.post("/Pedidos/UPDATEEstadoPedido", async (req, res) => {
     }
     catch(err)
     {
+        sql.close();
         success = {"Succes": "False", "Result":err};
         console.log(err);
     }
@@ -793,12 +828,12 @@ server.post("/Pedidos/UPDATEEstadoPedido", async (req, res) => {
   * POST sp_push_Cliente                            *
   * POST sp_push_Cliente_sin_fk                     *
   * POST sp_push_Empleado                           *
-  * POST sp_push_Farmacia                           * //Preguntarle a Alejandra sobre el tipo de dato de Ubicación--------
+  * POST sp_push_Farmacia                           * //Cambiado a dos Varchar: PuntoA y Punto B
   * POST sp_push_FarmaciaXMedicamento               *
   * POST sp_push_FarmaciaXMedicamento_sin_fk        *
   * POST sp_push_Marca                              *
-  * POST sp_push_Medicamento                        * //Recomendar cambiar image a varbinary(max)
-  * POST sp_push_Medicamento_sin_fk                 * //Recomendar cambiar image a varbinary(max)
+  * POST sp_push_Medicamento                        * //Cammbiado a varbinary como se deseaba
+  * POST sp_push_Medicamento_sin_fk                 * //Cambiado a varbinary como se deseaba
   * POST sp_push_Pedido                             *
   * POST sp_push_Pedido_sin_fk                      *
   * POST sp_push_PedidoXMedicamento                 *
