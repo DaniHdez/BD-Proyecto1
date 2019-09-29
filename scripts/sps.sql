@@ -5,6 +5,72 @@
 USE FarmaTEC2
 GO
 
+
+
+/**************** GET ID CENTRAL ****************/
+CREATE PROCEDURE sp_getid_Farmacia
+AS
+BEGIN
+	DECLARE @ID INT
+	SELECT @ID = COUNT(*) FROM Farmacia
+	RETURN @ID
+END
+GO
+
+CREATE PROCEDURE sp_getid_Marca
+AS
+BEGIN
+	DECLARE @ID INT
+	SELECT @ID = COUNT(*) FROM Marca
+	RETURN @ID
+END
+GO
+
+CREATE PROCEDURE sp_getid_Provincia
+AS
+BEGIN
+	DECLARE @ID INT
+	SELECT @ID = COUNT(*) FROM Provincia
+	RETURN @ID
+END
+GO
+
+CREATE PROCEDURE sp_getid_Pedido
+AS
+BEGIN
+	DECLARE @ID INT
+	SELECT @ID = COUNT(*) FROM Pedido
+	RETURN @ID
+END
+GO
+
+
+CREATE PROCEDURE sp_getid_Empleado
+AS
+BEGIN
+	DECLARE @ID INT
+	SELECT @ID = COUNT(*) FROM Empleado
+	RETURN @ID
+END
+GO
+
+CREATE PROCEDURE sp_getid_Cliente
+AS
+BEGIN
+	DECLARE @ID INT
+	SELECT @ID = COUNT(*) FROM Cliente
+	RETURN @ID
+END
+GO
+
+CREATE PROCEDURE sp_getid_Medicamento
+AS
+BEGIN
+	DECLARE @ID INT
+	SELECT @ID = COUNT(*) FROM Medicamento
+	RETURN @ID
+END
+GO
 /***************** PUSH ******************/
 
 /* Marca */
@@ -14,13 +80,16 @@ AS
 BEGIN
 BEGIN TRANSACTION;
 BEGIN TRY
-	INSERT INTO Marca(Nombre) VALUES (@Nombre)
+	DECLARE @ID INT
+	EXECUTE @ID = dbo.sp_getid_Marca
+	INSERT INTO Marca(Id, Nombre) VALUES (@ID, @Nombre)
 COMMIT TRANSACTION;
 END TRY
 BEGIN CATCH
     ROLLBACK TRANSACTION;
 END CATCH;END
 GO
+
 /* Provincia */
 CREATE PROCEDURE sp_push_Provincia
 	@Nombre VARCHAR(MAX)
@@ -28,8 +97,9 @@ AS
 BEGIN
 BEGIN TRANSACTION;
 BEGIN TRY
-	INSERT INTO Provincia(Nombre) VALUES (@Nombre)
-
+	DECLARE @ID INT;
+	EXECUTE @ID = dbo.sp_getid_Provincia
+	INSERT INTO Provincia(Id, Nombre) VALUES (@ID, @Nombre)
 COMMIT TRANSACTION;
 END TRY
 BEGIN CATCH
@@ -37,6 +107,8 @@ BEGIN CATCH
 END CATCH;
 END
 GO
+
+
 /* Farmacia*/
 CREATE PROCEDURE sp_push_Farmacia
 	@Nombre VARCHAR(MAX),
@@ -52,20 +124,22 @@ AS
 BEGIN
 BEGIN TRANSACTION;
 BEGIN TRY
+	DECLARE @ID INT;
+	EXECUTE @ID = dbo.sp_getid_Farmacia
 	DECLARE @Ubicacion geography;
 	SET @Ubicacion = geography::Point(@PuntoA, @PuntoB, '4326');
 	DECLARE @IdProvincia INT;
 	SET @IdProvincia=0;
 	SELECT @IdProvincia=Id FROM Provincia WHERE Nombre=@Provincia;
-	INSERT INTO Farmacia (Nombre,CedJuridica,Ubicacion,Telefono,Correo,Horario,TotalRecaudado,IdProvincia)  
-	VALUES (@Nombre,@CedJuridica,@Ubicacion,@Telefono,@Correo,@Horario,@TotalRecaudado,@IdProvincia)
-COMMIT TRANSACTION;
+	INSERT INTO Farmacia (Id, Nombre,CedJuridica,Ubicacion,Telefono,Correo,Horario,TotalRecaudado,IdProvincia)  
+	VALUES (@ID,@Nombre,@CedJuridica,@Ubicacion,@Telefono,@Correo,@Horario,@TotalRecaudado,@IdProvincia)
 END TRY
 BEGIN CATCH
     ROLLBACK TRANSACTION;
 END CATCH;
 END
 GO
+
 /* Empleado */
 CREATE PROCEDURE sp_push_Empleado
 	@Nombre VARCHAR(MAX),
@@ -80,12 +154,14 @@ AS
 BEGIN
 BEGIN TRANSACTION;
 BEGIN TRY
+	DECLARE @ID INT
+	EXECUTE @ID = dbo.sp_getid_Empleado
 	DECLARE @IdFarmacia INT;
 	SET @IdFarmacia=0;
 	SELECT @IdFarmacia=Id FROM Farmacia WHERE CedJuridica=@CedJurídica;
 	PRINT (@IdFarmacia);
-	INSERT INTO Empleado(Nombre,Apellido1,Apellido2,Tipo,Estado,Correo,Contraseña,IdFarmacia)  
-	VALUES (@Nombre,@Apellido1,@Apellido2,@Tipo,@Estado,@Correo,@Contraseña,@IdFarmacia)
+	INSERT INTO Empleado(Id, Nombre,Apellido1,Apellido2,Tipo,Estado,Correo,Contraseña,IdFarmacia)  
+	VALUES (@ID,@Nombre,@Apellido1,@Apellido2,@Tipo,@Estado,@Correo,@Contraseña,@IdFarmacia)
 COMMIT TRANSACTION;
 END TRY
 BEGIN CATCH
@@ -106,11 +182,13 @@ AS
 BEGIN
 BEGIN TRANSACTION;
 BEGIN TRY
+	DECLARE @ID INT
+	EXECUTE @ID = dbo.sp_getid_Cliente
 	DECLARE @IdProvincia INT;
 	SET @IdProvincia = 1;
 	SELECT @IdProvincia=Id FROM Provincia WHERE Nombre=@Provincia;
-	INSERT INTO Cliente(Cedula,Nombre,Apellido1,Apellido2,Telefono,Tipo,IdProvincia)
-	VALUES (@Cedula,@Nombre,@Apellido1,@Apellido2,@Telefono,@Tipo,@IdProvincia)
+	INSERT INTO Cliente(Id,Cedula,Nombre,Apellido1,Apellido2,Telefono,Tipo,IdProvincia)
+	VALUES (@ID,@Cedula,@Nombre,@Apellido1,@Apellido2,@Telefono,@Tipo,@IdProvincia)
 COMMIT TRANSACTION;
 END TRY
 BEGIN CATCH
@@ -134,11 +212,13 @@ AS
 BEGIN
 BEGIN TRANSACTION;
 BEGIN TRY
+	DECLARE @ID INT
+	EXECUTE @ID = dbo.sp_getid_Medicamento
 	DECLARE @IdMarca INT;
 	SET @IdMarca = 1;
 	SELECT @IdMarca=Id FROM Marca WHERE Nombre=@Marca;
-	INSERT INTO Medicamento(Nombre,CodigoDeMedicamento,Descripcion,DosisNinos,DosisAdultos,EfectosSecundarios,Foto,Precio,Tipo,IdMarca)
-	VALUES (@Nombre,@CodigoDeMedicamento,@Descripcion,@DosisNinos,@DosisAdultos,@EfectosSecundarios,@Foto,@Precio,@Tipo,@IdMarca)
+	INSERT INTO Medicamento(Id, Nombre,CodigoDeMedicamento,Descripcion,DosisNinos,DosisAdultos,EfectosSecundarios,Foto,Precio,Tipo,IdMarca)
+	VALUES (@ID,@Nombre,@CodigoDeMedicamento,@Descripcion,@DosisNinos,@DosisAdultos,@EfectosSecundarios,@Foto,@Precio,@Tipo,@IdMarca)
 COMMIT TRANSACTION;
 END TRY
 BEGIN CATCH
@@ -182,14 +262,16 @@ AS
 BEGIN
 BEGIN TRANSACTION;
 BEGIN TRY
+	DECLARE @ID INT
+	EXECUTE @ID = dbo.sp_getid_Pedido
 	DECLARE @IdFarmacia INT;
 	SET @IdFarmacia = 0;
 	SELECT @IdFarmacia=Id FROM Farmacia WHERE CedJuridica=@CedJuridica;
 	DECLARE @IdCliente INT;
 	SET @IdCliente = 0;
 	SELECT @IdCliente=Id FROM Cliente WHERE Cedula=@CedulaCliente;
-	INSERT INTO Pedido(Fecha,Estado,Monto,CodigoPedido,Tipo,IdCliente,IdFarmacia)
-	VALUES (@Fecha,@Estado,@Monto,@CodigoPedido,@Tipo,@IdCliente,@IdFarmacia);
+	INSERT INTO Pedido(Id,Fecha,Estado,Monto,CodigoPedido,Tipo,IdCliente,IdFarmacia)
+	VALUES (@ID,@Fecha,@Estado,@Monto,@CodigoPedido,@Tipo,@IdCliente,@IdFarmacia);
 COMMIT TRANSACTION;
 END TRY
 BEGIN CATCH
@@ -267,7 +349,7 @@ BEGIN TRY
 			INSERT INTO @ListaDeCantidades(CantidadDeMedicamento) VALUES(@V);
 			SET @StringCantidades = substring(@StringCantidades,charindex(@delimiter,@StringCantidades)+1,len(@StringCantidades));
 		END
-	EXECUTE sp_push_Pedido @Fecha,@Estado,@Monto,@Tipo,@CedulaCliente,@CedJuridica,@CodigoPedido;
+	EXECUTE sp_push_Pedido @ID,@Fecha,@Estado,@Monto,@Tipo,@CedulaCliente,@CedJuridica,@CodigoPedido;
 	DECLARE @i INT;
 	SET @i=1;
 	DECLARE @Cantidad INT;
