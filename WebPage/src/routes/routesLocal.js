@@ -6,6 +6,7 @@ import People from "@material-ui/icons/People";
 import SucursalOrder from "views/Orders/SucursalOrder.js";
 import SucursalDashboard from "views/Dashboard/SucursalDashboard";
 import Clients from "views/Clients/SucursalClient";
+import AddUser from "views/AgregarUsuarios/AgregarUsuario.js";
 
 const dashboardRoutes = [
   {
@@ -27,6 +28,13 @@ const dashboardRoutes = [
     name: "Clientes",
     icon: People,
     component: Clients,
+    layout: "/local"
+  },
+  {
+    path: "/agregar",
+    name: "Agregar usuarios",
+    icon: People,
+    component: AddUser,
     layout: "/local"
   }
 ];
