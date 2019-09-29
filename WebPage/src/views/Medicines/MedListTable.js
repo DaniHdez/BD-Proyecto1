@@ -126,14 +126,16 @@ export default function TableList() {
                   })
               }}
             />
-            <Fab
-              color="secondary"
-              aria-label="add"
-              className={classes.fab}
-              onClick={handleClick}
-            >
-              <AddIcon />
-            </Fab>
+            <div class="fab">
+              <Fab
+                color="secondary"
+                aria-label="add"
+                className={classes.fab}
+                onClick={handleClick}
+              >
+                <AddIcon />
+              </Fab>
+            </div>
           </CardBody>
         </Card>
         <Dialog

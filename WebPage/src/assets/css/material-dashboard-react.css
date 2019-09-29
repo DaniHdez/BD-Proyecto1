@@ -509,3 +509,18 @@ footer ul li a:hover {
 * {
   letter-spacing: normal !important;
 }
+
+div.fab {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;
+}
+
+h4.cardClient {
+  color: "#fafafa";
+}
+
+h3.cardBodyClient {
+  display: flex;
+  justify-content: center;
+}

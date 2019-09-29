@@ -24,6 +24,7 @@ import { Router, Route, Switch } from "react-router-dom";
 import Admin from "layouts/Admin.js";
 //import RTL from "layouts/RTL.js";
 import SignIn from "views/SignIn/SignIn.js";
+import Client from "layouts/Client.js";
 
 import "assets/css/material-dashboard-react.css?v=1.8.0";
 
@@ -34,6 +35,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/admin" component={Admin} />
       <Route path="/signin" component={SignIn} />
+      <Route path="/client" component={Client} />
     </Switch>
   </Router>,
   document.getElementById("root")

@@ -16,7 +16,6 @@ import {
 import Table from "components/Table/Table.js";
 
 import styles from "assets/jss/material-dashboard-react/views/iconsStyle.js";
-import { borderRight } from "@material-ui/system";
 
 import { topClientSJ } from "variables/general.js";
 
