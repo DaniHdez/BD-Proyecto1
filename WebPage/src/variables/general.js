@@ -108,6 +108,8 @@ var Medicines = [
 
 var Orders = [];
 var Clients = [];
+var Employee = [];
+var AdminSucursal = [];
 //Se deben traer los clientes de la base
 //El value se puede definir con un contador dependiendo de la cantidad de clientes en la tabla
 const clientsH = [
@@ -145,7 +147,9 @@ var exported = module.exports = {
   clientsH,
   orderState,
   orderType,
-  medicines
+  medicines,
+  Employee,
+  AdminSucursal
 };
 
 exported.GetTopClientes = function () { //FUcking READY
