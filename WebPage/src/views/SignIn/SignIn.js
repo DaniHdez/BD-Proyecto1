@@ -66,7 +66,7 @@ export default function SignInSide() {
         //else if (userRol==="client"){window.location.href="/client/dashboard"}
         //else if (userRol==="adminsucursal"){window.location.href="/adminsucursal/dashboard"}
         //else (userRol==="employee"){window.location.href="/employee/dashboard"}
-        window.location.href = "/client/dashboard";
+        window.location.href = "/employee/pedidos";
       } else {
         window.alert("Usuario o contraseña invalidos");
       }
