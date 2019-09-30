@@ -1195,6 +1195,25 @@ server.post("/Pedidos/UPDATEMontoFarmacia", async (req, res) => {
      res.send(result);
  });
 
+ server.get("/medicamentos/all", async (req, res) => {
+    let result;
+    try
+    {
+        let pool = await sql.connect(config);
+        let query = await pool.request()
+           .execute('sp_get_AllMedicametos')
+       sql.close()
+       result = {"Succes": "True", "Result":query.recordset}
+    }
+    catch (error) {
+       sql.close()
+       result = {"Succes":"False", "Result":error}
+       console.log(error) 
+    }
+    res.send(result);
+});
+
+ 
 
 
 

@@ -19,7 +19,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import { Medicines } from "variables/general.js";
+//import { Medicines } from "variables/general.js";
+import * as API from "variables/handleMeds";
+
 
 const styles = {
   cardCategoryWhite: {
@@ -55,7 +57,8 @@ const useStyles = makeStyles(styles);
 
 export default function TableList() {
   const classes = useStyles();
-//  var Medicines = []
+  var Medicines = []
+  //API.get_meds(Medicines);
   // ######################## 
   // LLAMAR AL API POR DATOS
   // GET ALL PEDIDOS(MEDICINES)
