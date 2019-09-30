@@ -263,6 +263,7 @@ server.post("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     let CedJuridica= req.body["CedJuridica"];
     let Tipo= req.body["Tipo"];
     let Tipo2=req.body["Tipo2"];
+    console.log("Holy fuck");
     let success;
     try
     {
@@ -271,27 +272,15 @@ server.post("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .input('CedJuridica', sql.BigInt, CedJuridica)
             .input('Tipo',sql.Int, Tipo)
             //.output('Contraseña', sql.VarChar(256))
-            .execute('sp_get_MontoEnFarmaciaSegunTipoDePedido', function(err, recordsets, returnValue) {
-                // ... error checks
-        
-                console.log(returnValue); // your isTrue value
-            });
+            .execute('sp_get_MontoEnFarmaciaSegunTipoDePedido')
         sql.close();
         let pool2 = await sql.connect(config);
         let result3 = await pool2.request()
             .input('CedJuridica', sql.BigInt, CedJuridica)
             .input('Tipo',sql.Int, Tipo2)
             //.output('Contraseña', sql.VarChar(256))
-            .execute('sp_get_MontoEnFarmaciaSegunTipoDePedido', function(err, recordsets, returnValue){
-                if(err){
-                    console.log(err);
-                }
-                else {
-                    console.log(recordsets[0]); // successfully receiving the value
-                }
-                connObj.conn.close();
-            });
-            
+            .execute('sp_get_MontoEnFarmaciaSegunTipoDePedido')
+        
         console.log("Before Closing");
         sql.close();
         console.log("After Closing");
@@ -1205,7 +1194,6 @@ server.post("/Pedidos/UPDATEMontoFarmacia", async (req, res) => {
      }
      res.send(result);
  });
-
 
 
 
