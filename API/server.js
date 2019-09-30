@@ -23,7 +23,7 @@ server.use(function (req, res, next) {
 */
 let config = {
     user: 'sa',
-    password:'1234',
+    password:'paso1234',
     server: 'localhost', 
     port:64403,
     database: 'FarmaTEC',
@@ -1195,14 +1195,16 @@ server.post("/Pedidos/UPDATEMontoFarmacia", async (req, res) => {
      res.send(result);
  });
 
- server.get("/medicamentos/all", async (req, res) => {
-    let result;
-    try
-    {
-        let pool = await sql.connect(config);
-        let query = await pool.request()
-           .execute('sp_get_AllMedicametos')
-       sql.close()
+//  server.get("/medicamentos/all", async (req, res) => {
+//     let result;
+//     try
+//     {
+//         let pool = await sql.connect(config);
+//         let query = await pool.request()
+//            .execute('sp_get_AllMedicametos')
+//        sql.close()
+//     }
+
  //  #### CREADOS POR DANI #### ///
  server.post("/monto/montosucursalrango", async (req, res) => {
     let CedulaJuridica = req.body["CedulaJuridica"];
@@ -1212,16 +1214,18 @@ server.post("/Pedidos/UPDATEMontoFarmacia", async (req, res) => {
     try
     {
         console.log(CedulaJuridica);
-        console.log(FechaFinal);
-        console.log(FechaInicial);
+        console.log(Date1);
+        console.log(Date2);
         console.log("Holaaaaaaaaaaaaaaaaa")
         console.log(sql.DateTime);
+        var Date1 = new Date(FechaInicial)
+        var Date2 = new Date(FechaFinal)
 
         let pool = await sql.connect(config);
         let query = await pool.request()
-            .input('FechaInicial', sql.DateTime, "2018-01-01")
-            .input('FechaFinal', sql.DateTime, "2020-09-05")
-            .input('CedJuridica', sql.bigint, 384612874)
+            .input('FechaInicial', sql.DateTime, Date1)
+            .input('FechaFinal', sql.DateTime, Date2)
+            .input('CedJuridica', sql.bigint, CedulaJuridica)
            .execute('sp_get_MontoEnSucursalXRango')
        sql.close()
        console.log(query)
@@ -1237,6 +1241,7 @@ server.post("/Pedidos/UPDATEMontoFarmacia", async (req, res) => {
 
 
 
+    
 
  server.listen(port, ()=> console.log(`Listening on port ${port}`))
  
