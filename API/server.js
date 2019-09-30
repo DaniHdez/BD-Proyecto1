@@ -145,7 +145,46 @@ server.post("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     console.log(req.body)
  });
  
- 
+ server.post("/Sucursal/GetDineroRecaudadoEnSucursal_Todas", async (req, res) => {
+    let CedJuridica1= req.body["CedJuridica1"];
+    let CedJuridica2= req.body["CedJuridica2"];
+    let CedJuridica3= req.body["CedJuridica3"];
+    
+    let success;
+    try
+    {
+        let pool = await sql.connect(config);
+        let result2 = await pool.request()
+            .input('CedJuridica', sql.BigInt, CedJuridica1)
+            //.output('Contraseña', sql.VarChar(256))
+            .execute('sp_get_DineroRecaudadoEnSucursal')
+        sql.close();
+        let pool2 = await sql.connect(config);
+        let result3 = await pool2.request()
+            .input('CedJuridica', sql.BigInt, CedJuridica2)
+            //.output('Contraseña', sql.VarChar(256))
+            .execute('sp_get_DineroRecaudadoEnSucursal')
+        sql.close();
+        let pool3 = await sql.connect(config);
+        let result4 = await pool3.request()
+            .input('CedJuridica', sql.BigInt, CedJuridica3)
+            //.output('Contraseña', sql.VarChar(256))
+            .execute('sp_get_DineroRecaudadoEnSucursal')
+        sql.close();
+        success = {"Succes": "True", "Result1": result2, "Result2": result3, "Result3": result4};
+
+    }
+    catch(err)
+    {
+        sql.close();
+        success = {"Succes": "False", "Result": err};
+        console.log(err);
+    }
+    res.send(success);
+    console.log(req.body)
+ });
+
+
  
  server.post("/Sucursal/GetDineroRecaudadoEnSucursal_NFK", async (req, res) => {
     let Farmacia= req.body["Farmacia"];
@@ -193,6 +232,7 @@ server.post("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     }
     res.send(success);
     console.log(req.body)
+    
  }); 
 
  server.post("/Farmacias/GETFarmacia", async (req, res) => {
@@ -219,7 +259,43 @@ server.post("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     console.log(req.body)
  }); 
 
-
+ server.post("/Montos/MontoRecaudadoPorSucursal", async (req, res) => {
+    let CedJuridica= req.body["CedJuridica"];
+    let Tipo= req.body["Tipo"];
+    let Tipo2=req.body["Tipo2"];
+    console.log("Holy fuck");
+    let success;
+    try
+    {
+        let pool = await sql.connect(config);
+        let result2 = await pool.request()
+            .input('CedJuridica', sql.BigInt, CedJuridica)
+            .input('Tipo',sql.Int, Tipo)
+            //.output('Contraseña', sql.VarChar(256))
+            .execute('sp_get_MontoEnFarmaciaSegunTipoDePedido')
+        sql.close();
+        let pool2 = await sql.connect(config);
+        let result3 = await pool2.request()
+            .input('CedJuridica', sql.BigInt, CedJuridica)
+            .input('Tipo',sql.Int, Tipo2)
+            //.output('Contraseña', sql.VarChar(256))
+            .execute('sp_get_MontoEnFarmaciaSegunTipoDePedido')
+        
+        console.log("Before Closing");
+        sql.close();
+        console.log("After Closing");
+        success = {"Succes": "True", "Result_Tipo1": result2, "Result_Tipo2":result3};
+    }
+    catch(err)
+    {
+        sql.close();
+        success = {"Succes": "False", "Result_Tipo1": err, "Result_Tipo2": err};
+        console.log(err);
+    }
+    res.send(success);
+    console.log(req.body)
+    console.log(success)
+ }); 
 
  
  server.post("/Montos/GetMontoEnFarmaciaSegunTipoDePedido", async (req, res) => {
@@ -268,6 +344,45 @@ server.post("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     console.log(req.body)
  }); 
  
+ server.post("/Montos/GetMontoParaTipoDePedido_ambos", async (req, res) => {
+    let FechaInicial= req.body["FechaInicial"];
+    let FechaFinal= req.body["FechaFinal"];
+    let Tipo1= req.body["Tipo1"];
+    let Tipo2= req.body["Tipo2"];
+    var Date1 = new Date(FechaInicial);
+    var Date2 = new Date(FechaFinal);
+    let success;
+    try
+    {
+        let pool = await sql.connect(config);
+        let result2 = await pool.request()
+            .input('FechaInicial',sql.DateTime, Date1)
+            .input('FechaFinal',sql.DateTime,Date2)
+            .input('Tipo',sql.Int, Tipo1)
+            //.output('Contraseña', sql.VarChar(256))
+            .execute('sp_get_MontoParaTipoDePedido')
+        sql.close();
+        let pool2 = await sql.connect(config);
+        let result3 = await pool2.request()
+            .input('FechaInicial',sql.DateTime, Date1)
+            .input('FechaFinal',sql.DateTime,Date2)
+            .input('Tipo',sql.Int, Tipo2)
+            //.output('Contraseña', sql.VarChar(256))
+            .execute('sp_get_MontoParaTipoDePedido')
+        sql.close();
+        success = {"Succes": "True", "Result1": result2, "Result2": result3};
+    }
+    catch(err)
+    {
+        sql.close();
+        success = {"Succes": "False", "Result": err};
+        console.log(err);
+    }
+    res.send(success);
+    console.log(req.body)
+ }); 
+
+
  server.post("/Montos/GetMontoParaTipoDePedido", async (req, res) => {
     let FechaInicial= req.body["FechaInicial"];
     let FechaFinal= req.body["FechaFinal"];
@@ -400,7 +515,6 @@ server.post("/Pedidos/GETPedidosEnRango", async (req, res) => {
         console.log(err);
     }
     res.send(success);
-    console.log(req.body)
  });
 
  server.post("/Pedidos/GETPedidosXClienteEnRango", async (req, res) => {
@@ -429,7 +543,6 @@ server.post("/Pedidos/GETPedidosEnRango", async (req, res) => {
         console.log(err);
     }
     res.send(success);
-    console.log(req.body)
  });
  
 
@@ -1099,7 +1212,8 @@ server.post("/Pedidos/UPDATEMontoFarmacia", async (req, res) => {
   * DELETE sp_delete_PedidoXMedicamento             *
   * 
   * 
+  * AÑADIR ESTOS SP:
+  * AÑadir FULL_PEDIDO
+  * AÑadir PEDIDOS_DE_CLIENTE
   * 
   */
-
-  //Recordarle a Alejandra que IdFarmacia no debería ser DATETIME
