@@ -20,12 +20,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import MenuItem from "@material-ui/core/MenuItem";
-import DateFnsUtils from "@date-io/date-fns";
-import Grid from "@material-ui/core/Grid";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from "@material-ui/pickers";
 
 import {
   Orders,
@@ -119,14 +113,6 @@ export default function TableList() {
     setValuesM({ ...valuesM, [name]: event.target.value });
   };
 
-  const [selectedDate, setSelectedDate] = React.useState(
-    new Date("2014-08-18T21:11:54")
-  );
-
-  const handleDateChange = date => {
-    setSelectedDate(date);
-  };
-
   const [state, setState] = React.useState({
     columns: [
       { title: "Tipo", field: "type" },
@@ -192,23 +178,16 @@ export default function TableList() {
         <DialogTitle id="form-dialog-title">Agregar pedido</DialogTitle>
         <DialogContent>
           <DialogContentText>Datos requeridos para pedido</DialogContentText>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container justify="space-around">
-              <KeyboardDatePicker
-                margin="normal"
-                id="date"
-                label="Fecha del pedido"
-                format="MM/dd/yyyy"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date"
-                }}
-              />
-            </Grid>
-          </MuiPickersUtilsProvider>
           <TextField
-            id="standard-select-currency"
+            margin="normal"
+            id="inidateMRT"
+            label="Fecha de registro"
+            type="date"
+            defaultValue="mm/dd/yyyy"
+            className={classes.textField}
+          />
+          <TextField
+            id="client"
             select
             label="Cliente"
             className={classes.textField}
@@ -229,7 +208,7 @@ export default function TableList() {
             ))}
           </TextField>
           <TextField
-            id="standard-select-currency"
+            id="state"
             select
             label="Estado"
             className={classes.textField}
@@ -250,7 +229,7 @@ export default function TableList() {
             ))}
           </TextField>
           <TextField
-            id="standard-select-currency"
+            id="orderType"
             select
             label="Tipo de pedido"
             className={classes.textField}
@@ -271,7 +250,7 @@ export default function TableList() {
             ))}
           </TextField>
           <TextField
-            id="standard-select-currency"
+            id="Medicine"
             select
             label="Medicamentos"
             className={classes.textField}

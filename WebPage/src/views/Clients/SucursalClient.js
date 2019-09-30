@@ -9,15 +9,9 @@ import Table from "components/Table/Table.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from "@material-ui/pickers";
+import Button from "@material-ui/core/Button";
+import { TextField } from "@material-ui/core";
 
-import { borderRight } from "@material-ui/system";
 import { Clients } from "variables/local.js";
 
 const styles = {
@@ -50,18 +44,20 @@ const styles = {
   }
 };
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles(theme => ({
+  button: {
+    margin: theme.spacing(1)
+  },
+  textField: { margin: theme.spacing(1) }
+}));
 
 export default function TableClients() {
   const classes = useStyles();
 
-  const [selectedDate, setSelectedDate] = React.useState(
-    new Date("2014-08-18T21:11:54")
-  );
-
-  const handleDateChange = date => {
-    setSelectedDate(date);
-  };
+  function handleFilter() {
+    var fechaInicial = document.getElementById("inidate").value;
+    var fechaFinal = document.getElementById("findate").value;
+  }
 
   return (
     <GridContainer>
@@ -69,36 +65,29 @@ export default function TableClients() {
         <Card>
           <CardHeader color="info">
             <h4>Tabla de clientes:</h4>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <div class="date">
-                <KeyboardDatePicker
-                  disableToolbar
-                  variant="inline"
-                  format="MM/dd/yyyy"
-                  margin="normal"
-                  id="fromdateMR"
-                  label="Desde"
-                  value={selectedDate}
-                  onChange={handleDateChange}
-                  KeyboardButtonProps={{
-                    "aria-label": "change date"
-                  }}
-                />
-                <KeyboardDatePicker
-                  disableToolbar
-                  variant="inline"
-                  format="MM/dd/yyyy"
-                  margin="normal"
-                  id="todateMR"
-                  label="Hasta"
-                  value={selectedDate}
-                  onChange={handleDateChange}
-                  KeyboardButtonProps={{
-                    "aria-label": "change date"
-                  }}
-                />
-              </div>
-            </MuiPickersUtilsProvider>
+            <div class="fab">
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="inidate"
+                label="Fecha de inicio"
+                type="date"
+                defaultValue="mm/dd/yyyy"
+                className={classes.textField}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="findate"
+                label="Fecha final"
+                type="date"
+                defaultValue="mm/dd/yyyy"
+                className={classes.textField}
+              />
+              <Button className={classes.button} onClick={handleFilter}>
+                Filtrar
+              </Button>
+            </div>
           </CardHeader>
           <CardBody>
             <Table

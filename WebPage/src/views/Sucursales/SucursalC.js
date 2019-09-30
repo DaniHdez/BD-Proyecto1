@@ -8,70 +8,79 @@ import GridContainer from "components/Grid/GridContainer.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from "@material-ui/pickers";
 import Table from "components/Table/Table.js";
-
-import styles from "assets/jss/material-dashboard-react/views/iconsStyle.js";
-import { borderRight } from "@material-ui/system";
+import Button from "@material-ui/core/Button";
+import { TextField } from "@material-ui/core";
 
 import { topClientC } from "variables/general.js";
 
-const useStyles = makeStyles(styles);
-//Crear función para obtener valores db segun fecha
+const useStyles = makeStyles(theme => ({
+  button: {
+    margin: theme.spacing(1)
+  },
+  textField: { margin: theme.spacing(1) }
+}));
 
 export default function Sucursal() {
   const classes = useStyles();
-  const [selectedDate, setSelectedDate] = React.useState(
-    new Date("2014-08-18T21:11:54")
-  );
 
-  const handleDateChange = date => {
-    setSelectedDate(date);
-  };
-
-  //Funcin para obtener el valor de la fecha indicada
+  //###################################
+  //obtener datos de DB en esas fechas
+  //###################################
   const mr = "$1000";
   const mrtr = "$1000";
   const mrte = "$1000";
+
+  function handleMRFilter() {
+    var fechainicial = document.getElementById("inidateMR").value;
+    var fechainicial = document.getElementById("findateMR").value;
+    //###################################
+    //obtener datos de DB en esas fechas
+    //###################################
+  }
+  function handleMRTFilter() {
+    var fechainicial = document.getElementById("inidateMRT").value;
+    var fechainicial = document.getElementById("findateMRT").value;
+    //###################################
+    //obtener datos de DB en esas fechas
+    //###################################
+  }
+  function handleTCFilter() {
+    var fechainicial = document.getElementById("inidateTC").value;
+    var fechainicial = document.getElementById("findateTC").value;
+    //###################################
+    //obtener datos de DB en esas fechas
+    //###################################
+  }
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={6}>
         <Card>
           <CardHeader color="warning">
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="MM/dd/yyyy"
+            <div class="fab">
+              <TextField
+                variant="outlined"
                 margin="normal"
-                id="fromdateMR"
-                label="Desde"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date"
-                }}
-                padding={borderRight}
+                id="inidateMR"
+                label="Fecha de inicio"
+                defaultValue="mm/dd/yyyy"
+                className={classes.textField}
+                type="date"
               />
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="MM/dd/yyyy"
+              <TextField
+                variant="outlined"
                 margin="normal"
-                id="todateMR"
-                label="Hasta"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date"
-                }}
-                padding={borderRight}
+                id="findateMR"
+                label="Fecha final"
+                defaultValue="mm/dd/yyyy"
+                className={classes.textField}
+                type="date"
               />
-            </MuiPickersUtilsProvider>
+              <Button className={classes.button} onClick={handleMRFilter}>
+                Filtrar
+              </Button>
+            </div>
           </CardHeader>
           <CardBody>
             <h4 className={classes.cardTitle}>Monto recaudado:</h4>
@@ -82,36 +91,29 @@ export default function Sucursal() {
       <GridItem xs={12} sm={12} md={6}>
         <Card>
           <CardHeader color="success">
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="MM/dd/yyyy"
+            <div class="fab">
+              <TextField
+                variant="outlined"
                 margin="normal"
-                id="fromdateTP"
-                label="Desde"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date"
-                }}
-                padding={borderRight}
+                id="inidateMRT"
+                label="Fecha de inicio"
+                type="date"
+                defaultValue="mm/dd/yyyy"
+                className={classes.textField}
               />
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="MM/dd/yyyy"
+              <TextField
+                variant="outlined"
                 margin="normal"
-                id="todateTP"
-                label="Hasta"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date"
-                }}
-                padding={borderRight}
+                id="findateMRT"
+                label="Fecha final"
+                type="date"
+                defaultValue="mm/dd/yyyy"
+                className={classes.textField}
               />
-            </MuiPickersUtilsProvider>
+              <Button className={classes.button} onClick={handleMRTFilter}>
+                Filtrar
+              </Button>
+            </div>
           </CardHeader>
           <CardBody>
             <h4 className={classes.cardTitle}>Monto recaudado por tipo:</h4>
@@ -123,34 +125,29 @@ export default function Sucursal() {
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="MM/dd/yyyy"
+            <div class="fab">
+              <TextField
+                variant="outlined"
                 margin="normal"
-                id="fromdateC"
-                label="Desde"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date"
-                }}
+                id="inidateTC"
+                label="Fecha de inicio"
+                type="date"
+                defaultValue="mm/dd/yyyy"
+                className={classes.textField}
               />
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="MM/dd/yyyy"
+              <TextField
+                variant="outlined"
                 margin="normal"
-                id="todateC"
-                label="Hasta"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date"
-                }}
+                id="findateTC"
+                label="Fecha final"
+                type="date"
+                defaultValue="mm/dd/yyyy"
+                className={classes.textField}
               />
-            </MuiPickersUtilsProvider>
+              <Button className={classes.button} onClick={handleTCFilter}>
+                Filtrar
+              </Button>
+            </div>
           </CardHeader>
           <CardBody>
             <Table
