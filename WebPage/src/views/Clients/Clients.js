@@ -21,6 +21,9 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { Clients } from "variables/general.js";
 
+import * as API from "variables/handleClient";
+
+
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -82,6 +85,9 @@ export default function TableClients() {
       phone != "" &&
       province != ""
     ) {
+
+      var register = API.create_client(name, lastname1, lastname2, id, phone, province);    
+       
       ////////////////////////////////////////////////////////////
       //Aca se deb pasar los datos escritos en el form, a la api//
       ////////////////////////////////////////////////////////////
