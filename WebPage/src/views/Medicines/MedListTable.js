@@ -55,6 +55,11 @@ const useStyles = makeStyles(styles);
 
 export default function TableList() {
   const classes = useStyles();
+//  var Medicines = []
+  // ######################## 
+  // LLAMAR AL API POR DATOS
+  // GET ALL PEDIDOS(MEDICINES)
+  // ######################## 
 
   const [open, setOpen] = React.useState(false);
 
@@ -76,6 +81,7 @@ export default function TableList() {
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
+    
   };
 
   const handleClick = () => {
@@ -87,6 +93,7 @@ export default function TableList() {
   };
 
   const handlePopClickAccept = () => {
+    console.log("HOLIS POP CLICK ACCEPT")
     setOpen(false);
   };
 

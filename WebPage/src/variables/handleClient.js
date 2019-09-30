@@ -51,10 +51,11 @@ function create_client
   xhr.send(to_send_json)
 }
 
-function get_clients ( )
+function get_clients (Clientes )
 {
   var xhr = new window.XMLHttpRequest()
   var request_response;
+ // var lista_clients = [];
   xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         request_response = JSON.parse(this.responseText);
@@ -63,18 +64,34 @@ function get_clients ( )
         var query  = request_response.Succes;
         if(query == "True")
         {
-           return 
+            var json_clients = request_response.Result;
+            for (var i = 0; i <json_clients.length; i++){
+              var tempClient = [];
+              tempClient.push(json_clients[i].Nombre)
+              console.log("NOMBREEE")
+              console.log(json_clients[i].Nombre)
+              tempClient.push(json_clients[i].Apellido1 + " " + json_clients[i].Apellido2)
+              if(json_clients[i].Tipo == 1){ tempClient.push("Oro")}
+              else if(json_clients[i].Tipo == 2){ tempClient.push("Plata")}
+              else { tempClient.push("Bronce")}
+              Clientes.push(tempClient);
+            }
+
         }
-        else{
-            alert('No se pudo realizar la operación\n')
-        }
+        // else{
+        //     alert('No se pudo realizar la operación\n')
+          
+        // }
     }
-    else{
-        alert('No se pudo realizar la conexión\n')   
-    }
+    // else{
+    //     alert('No se pudo realizar la conexión\n')   
+    // }
+    console.log("Lista Clientes")
+    console.log(Clientes)
+    //return lista_clients
   };
 
-  xhr.open('POST', 'http://localhost:8080/Usuarios/POSTCliente', false )
+  xhr.open('GET', 'http://localhost:8080/clientes/all', false )
   
   console.log("JSON to send:")
   xhr.setRequestHeader("Content-Type", "application/json");
