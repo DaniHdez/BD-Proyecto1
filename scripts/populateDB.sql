@@ -1,6 +1,6 @@
 /* POPULATE DATABASE */
 
-USE FarmaTEC2
+USE FarmaTEC
 GO
 
 /* POBLANDO Provincia */
@@ -27,11 +27,9 @@ EXECUTE sp_push_Farmacia 'La Fischel',377768778,'9.979405','-84.089527',22546754
 DECLARE @Img1 VARBINARY(MAX);
 DECLARE @Img2 VARBINARY(MAX);
 DECLARE @Img3 VARBINARY(MAX);
-DECLARE
 SET @Img1=(SELECT * FROM OPENROWSET(BULK N'C:\Users\alecastrillo\Pictures\enantyum.jpg', SINGLE_BLOB) AS Img1);
 SET @Img2=(SELECT * FROM OPENROWSET(BULK N'C:\Users\alecastrillo\Pictures\paracetamol.jpeg', SINGLE_BLOB) as Img2);
 SET @Img3=(SELECT * FROM OPENROWSET(BULK N'C:\Users\alecastrillo\Pictures\viagra.jpg', SINGLE_BLOB) as Img3)
-SELECT * FROM Farmacia
 EXECUTE sp_push_Medicamento 'Enantyum Gel','MED20190001','Analgésico perteneciente al grupo de medicamentos denominados antiinflamatorios no esteroideos (AINE).','0','1 cada 8h','Náuseas, vómitos, diarrea y dolor o ardor de estómago.',@Img1,₡1500,'Analgésico','Enantyum';
 EXECUTE sp_push_Medicamento 'Paracetamol','MED20190010','Fármaco con propiedades analgésicas y antipiréticas utilizado principalmente para tratar la fiebre, y el dolor leve y moderado.','10 a 15 mg (3 a 5 gotas) por kilo de peso','1 o medio comprimido (1 g-500 mg) cada mínimo 4h.','Se pueden manifestar con síntomas como fatiga inusual, anorexia, náuseas y/o vómitos, dolor abdominal, ictericia, orina oscura o deposiciones blanquecinas.',@Img2,₡200,'Analgésico y antipirético','Panadol';
 EXECUTE sp_push_Medicamento 'Viagra','MED20190101','Sustancia usada para tratar la disfunción eréctil.','0','1 cada 8h','Dolor de cabeza, enrojecimiento, dispepsia, trastornos visuales, como distorsión de la visión de los colores y visión borrosa.',@Img3,₡3000,'Inhibidores','Pfizer';
@@ -58,12 +56,24 @@ EXECUTE sp_push_FarmaciaXMedicamento 377768778,'MED20190010',100
 EXECUTE sp_push_FarmaciaXMedicamento 377768778,'MED20190101',100
 /* POBLANDO FULL Pedido */
 EXECUTE sp_push_FullPedido '01/01/19 22:23:33.666',1,₡5500,'PED20180001',1,116892238,384612874,'MED20190001,MED20190010,MED20190101,','1,5,1,'
-EXECUTE sp_push_FullPedido '07/01/19 22:23:33.666',1,₡1200,'PED20180001',1,116892238,377768778,'MED20190010,','6,'
-EXECUTE sp_push_FullPedido '01/01/19 22:23:33.666',1,₡400,'PED20180001',1,109988787,378659898,'MED20190010,','2,'
-EXECUTE sp_push_FullPedido '02/01/19 22:23:33.666',1,₡1200,'PED20180001',1,109988787,384612874,'MED20190010,','1,'
-EXECUTE sp_push_FullPedido '03/01/19 22:23:33.666',1,₡4500,'PED20180001',1,116892238,378659898,'MED20190101,','3,'
-EXECUTE sp_push_FullPedido '01/02/19 22:23:33.666',1,₡5500,'PED20180001',1,116892238,384612874,'MED20190001,MED20190010,MED20190101,','1,5,1,'
-EXECUTE sp_push_FullPedido '07/02/19 22:23:33.666',1,₡1200,'PED20180001',1,116892238,378659898,'MED20190010,','6,'
-EXECUTE sp_push_FullPedido '01/02/19 22:23:33.666',1,₡400,'PED20180001',1,109988787,378659898,'MED20190010,','2,'
-EXECUTE sp_push_FullPedido '02/02/19 22:23:33.666',1,₡1200,'PED20180001',1,109988787,377768778,'MED20190010,','1,'
-EXECUTE sp_push_FullPedido '03/02/19 22:23:33.666',1,₡4500,'PED20180001',1,116892238,384612874,'MED20190101,','3,'
+EXECUTE sp_push_FullPedido '07/01/19 22:23:33.666',1,₡1200,'PED20180010',1,116892238,377768778,'MED20190010,','6,'
+EXECUTE sp_push_FullPedido '01/04/19 22:23:33.666',1,₡400,'PED20180011',1,109988787,378659898,'MED20190010,','2,'
+EXECUTE sp_push_FullPedido '02/01/19 22:23:33.666',1,₡1200,'PED20180100',1,109988787,384612874,'MED20190010,','1,'
+EXECUTE sp_push_FullPedido '03/04/19 22:23:33.666',1,₡4500,'PED20180101',1,116892238,378659898,'MED20190101,','3,'
+EXECUTE sp_push_FullPedido '01/02/19 22:23:33.666',1,₡5500,'PED20180110',1,116892238,384612874,'MED20190001,MED20190010,MED20190101,','1,5,1,'
+EXECUTE sp_push_FullPedido '07/02/19 22:23:33.666',1,₡1200,'PED20180111',1,116892238,378659898,'MED20190010,','6,'
+EXECUTE sp_push_FullPedido '01/02/19 22:23:33.666',1,₡400,'PED20181000',1,109988787,378659898,'MED20190010,','2,'
+EXECUTE sp_push_FullPedido '02/04/19 22:23:33.666',1,₡1200,'PED20181010',1,109988787,377768778,'MED20190010,','1,'
+EXECUTE sp_push_FullPedido '03/02/19 22:23:33.666',1,₡4500,'PED20181011',1,116892238,384612874,'MED20190101,','3,'
+EXECUTE sp_push_FullPedido '07/03/19 22:23:33.666',1,₡1200,'PED201801111',1,345547890,378659898,'MED20190010,','6,'
+EXECUTE sp_push_FullPedido '01/03/19 22:23:33.666',1,₡400,'PED201810002',1,345547890,378659898,'MED20190010,','2,'
+EXECUTE sp_push_FullPedido '02/03/19 22:23:33.666',1,₡1200,'PED201810103',1,345547890,377768778,'MED20190010,','1,'
+EXECUTE sp_push_FullPedido '03/04/19 22:23:33.666',1,₡4500,'PED201810114',1,345547890,384612874,'MED20190101,','3,'
+EXECUTE sp_push_FullPedido '07/03/19 22:23:33.666',1,₡1200,'PED201801115',1,223443458,378659898,'MED20190010,','6,'
+EXECUTE sp_push_FullPedido '01/03/19 22:23:33.666',1,₡400,'PED201810006',1,223443458,378659898,'MED20190010,','2,'
+EXECUTE sp_push_FullPedido '02/03/19 22:23:33.666',1,₡1200,'PED201810107',1,398677655,377768778,'MED20190010,','1,'
+EXECUTE sp_push_FullPedido '03/04/19 22:23:33.666',1,₡4500,'PED201810118',1,398677655,384612874,'MED20190101,','3,'
+EXECUTE sp_push_FullPedido '07/03/19 22:23:33.666',1,₡1200,'PED201801119',1,345547890,378659898,'MED20190010,','6,'
+EXECUTE sp_push_FullPedido '01/03/19 22:23:33.666',1,₡400,'PED201810000',1,207748833,378659898,'MED20190010,','2,'
+EXECUTE sp_push_FullPedido '02/04/19 22:23:33.666',1,₡1200,'PED2018101033',1,207748833,377768778,'MED20190010,','1,'
+EXECUTE sp_push_FullPedido '03/02/19 22:23:33.666',1,₡4500,'PED2018101144',1,207748833,384612874,'MED20190101,','3,'
