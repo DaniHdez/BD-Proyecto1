@@ -23,7 +23,7 @@ server.use(function (req, res, next) {
 */
 let config = {
     user: 'sa',
-    password:'paso1234',
+    password:'1234',
     server: 'localhost', 
     port:64403,
     database: 'FarmaTEC',
@@ -1203,6 +1203,28 @@ server.post("/Pedidos/UPDATEMontoFarmacia", async (req, res) => {
         let query = await pool.request()
            .execute('sp_get_AllMedicametos')
        sql.close()
+ //  #### CREADOS POR DANI #### ///
+ server.post("/monto/montosucursalrango", async (req, res) => {
+    let CedulaJuridica = req.body["CedulaJuridica"];
+    let FechaInicial = req.body["FechaInicial"];
+    let FechaFinal = req.body["FechaFinal"];
+    let result;
+    try
+    {
+        console.log(CedulaJuridica);
+        console.log(FechaFinal);
+        console.log(FechaInicial);
+        console.log("Holaaaaaaaaaaaaaaaaa")
+        console.log(sql.DateTime);
+
+        let pool = await sql.connect(config);
+        let query = await pool.request()
+            .input('FechaInicial', sql.DateTime, "2018-01-01")
+            .input('FechaFinal', sql.DateTime, "2020-09-05")
+            .input('CedJuridica', sql.bigint, 384612874)
+           .execute('sp_get_MontoEnSucursalXRango')
+       sql.close()
+       console.log(query)
        result = {"Succes": "True", "Result":query.recordset}
     }
     catch (error) {
@@ -1212,8 +1234,6 @@ server.post("/Pedidos/UPDATEMontoFarmacia", async (req, res) => {
     }
     res.send(result);
 });
-
- 
 
 
 
