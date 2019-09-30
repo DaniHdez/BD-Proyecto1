@@ -23,7 +23,7 @@ server.use(function (req, res, next) {
 */
 let config = {
     user: 'sa',
-    password:'asd',
+    password:'paso1234',
     server: 'localhost', 
     port:64403,
     database: 'FarmaTEC',
@@ -263,7 +263,6 @@ server.post("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
     let CedJuridica= req.body["CedJuridica"];
     let Tipo= req.body["Tipo"];
     let Tipo2=req.body["Tipo2"];
-    console.log("Holy fuck");
     let success;
     try
     {
@@ -272,15 +271,27 @@ server.post("/Sucursal/GetDineroRecaudadoEnSucursal", async (req, res) => {
             .input('CedJuridica', sql.BigInt, CedJuridica)
             .input('Tipo',sql.Int, Tipo)
             //.output('Contraseña', sql.VarChar(256))
-            .execute('sp_get_MontoEnFarmaciaSegunTipoDePedido')
+            .execute('sp_get_MontoEnFarmaciaSegunTipoDePedido', function(err, recordsets, returnValue) {
+                // ... error checks
+        
+                console.log(returnValue); // your isTrue value
+            });
         sql.close();
         let pool2 = await sql.connect(config);
         let result3 = await pool2.request()
             .input('CedJuridica', sql.BigInt, CedJuridica)
             .input('Tipo',sql.Int, Tipo2)
             //.output('Contraseña', sql.VarChar(256))
-            .execute('sp_get_MontoEnFarmaciaSegunTipoDePedido')
-        
+            .execute('sp_get_MontoEnFarmaciaSegunTipoDePedido', function(err, recordsets, returnValue){
+                if(err){
+                    console.log(err);
+                }
+                else {
+                    console.log(recordsets[0]); // successfully receiving the value
+                }
+                connObj.conn.close();
+            });
+            
         console.log("Before Closing");
         sql.close();
         console.log("After Closing");
@@ -655,7 +666,7 @@ server.post("/Pedidos/GETPedidosEnRango", async (req, res) => {
             .input('Tipo', sql.INT, Tipo)
             .input('Provincia', sql.VarChar(256), Provincia)
             //.output('Contraseña', sql.VarChar(256))
-            .execute('sp_push_Cliente_sin_fk')
+            .execute('sp_push_Cliente')
         sql.close();
 
         success = {"Succes": "True", "Result": result2};
@@ -1175,6 +1186,31 @@ server.post("/Pedidos/UPDATEMontoFarmacia", async (req, res) => {
     res.send(success);
  });
  
+
+//  #### CREADOS POR SANTI #### ///
+ server.get("/clientes/all", async (req, res) => {
+     let result;
+     try
+     {
+         let pool = await sql.connect(config);
+         let query = await pool.request()
+            .execute('sp_getall_clientes')
+        sql.close()
+        result = {"Succes": "True", "Result":query.recordset}
+     }
+     catch (error) {
+        sql.close()
+        result = {"Succes":"False", "Result":error}
+        console.log(error) 
+     }
+     res.send(result);
+ });
+
+
+
+
+
+
  server.listen(port, ()=> console.log(`Listening on port ${port}`))
  
 

@@ -19,8 +19,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import { Clients } from "variables/general.js";
-
 import * as API from "variables/handleClient";
 
 
@@ -58,6 +56,9 @@ const useStyles = makeStyles(styles);
 
 export default function TableClients() {
   const classes = useStyles();
+  console.log("Holis")
+  var Clients = [];
+  API.get_clients(Clients)
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
