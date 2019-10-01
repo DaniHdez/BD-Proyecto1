@@ -13,6 +13,8 @@ import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
 
 import { topClientC } from "variables/general.js";
+import * as API from "variables/handleSucursales.js";
+import { mr } from "variables/handleSucursales.js";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -27,13 +29,16 @@ export default function Sucursal() {
   //###################################
   //obtener datos de DB en esas fechas
   //###################################
-  var mr;
+  //var mr = 0;
   var mrtr;
   var mrte;
 
   function handleMRFilter() {
     var fechainicial = document.getElementById("inidateMR").value;
-    var fechainicial = document.getElementById("findateMR").value;
+    var fechafinal = document.getElementById("findateMR").value;
+    //mr = API.getMontoRecaudadoCartago(fechainicial, fechafinal);
+    API.getMontoRecaudadoCartago(fechainicial, fechafinal);
+    //console.log(mr);
     //###################################
     //obtener datos de DB en esas fechas
     //###################################
@@ -65,6 +70,7 @@ export default function Sucursal() {
                 id="inidateMR"
                 label="Fecha de inicio"
                 defaultValue="mm/dd/yyyy"
+                format={"YYYY/MM/DD"}
                 className={classes.textField}
                 type="date"
               />
@@ -74,6 +80,7 @@ export default function Sucursal() {
                 id="findateMR"
                 label="Fecha final"
                 defaultValue="mm/dd/yyyy"
+                format={"YYYY/MM/DD"}
                 className={classes.textField}
                 type="date"
               />
