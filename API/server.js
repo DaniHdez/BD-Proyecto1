@@ -1321,6 +1321,28 @@ server.get("/pedidos/all", async(req, res) =>{
     res.send(success);
     console.log(req.body)
  });
+
+ server.post("/Clientes/GETPedidosCliente", async (req, res) => {
+    let Cedula = req.body["CedulaCliente"];
+    let success;
+    try
+    {
+        let pool = await sql.connect(config);
+        let result2 = await pool.request()
+            .input('Cedula', sql.Int, Cedula)
+            .execute('sp_get_PedidosDeCliente')
+        sql.close();
+        success = {"Succes": "True", "Result": result2.recordset};
+    }
+    catch(err)
+    {
+        sql.close();
+        success = {"Succes": "False", "Result": err};
+        console.log(err);
+    }
+    res.send(success);
+    console.log(req.body)
+ });
     
 
  server.listen(port, ()=> console.log(`Listening on port ${port}`))
