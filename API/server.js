@@ -23,7 +23,7 @@ server.use(function (req, res, next) {
 */
 let config = {
     user: 'sa',
-    password:'1234',
+    password:'paso1234',
     server: 'localhost', 
     port:64403,
     database: 'FarmaTEC',
@@ -1194,7 +1194,7 @@ server.post("/Pedidos/UPDATEMontoFarmacia", async (req, res) => {
      {
          let pool = await sql.connect(config);
          let query = await pool.request()
-            .execute('sp_getall_clientes')
+            .execute('sp_get_AllClientes')
         sql.close()
         result = {"Succes": "True", "Result":query.recordset}
      }
@@ -1255,6 +1255,7 @@ server.get("/pedidos/all", async(req, res) =>{
             .input('FechaInicial',sql.DateTime, Date1)
             .input('FechaFinal',sql.DateTime,Date2)
             .input('CedJuridica',sql.VarChar(256), CedJuridica)
+            //.output('Contraseña', sql.VarChar(256))
             .execute('sp_get_MontoEnSucursalXRango')
         sql.close();
         success = {"Succes": "True", "Result": result2.recordset[0][""]};
@@ -1268,60 +1269,9 @@ server.get("/pedidos/all", async(req, res) =>{
     res.send(success);
  });
 
- server.post("/Monto/MontoXSucursalXTipoEnRango", async (req, res) => {
-    let FechaInicial= req.body["FechaInicial"];
-    let FechaFinal = req.body["FechaFinal"];
-    let CedJuridica = req.body["CedJuridica"];
-    let Tipo = req.body["Tipo"];
-    let success;
-    try
-    {
-        let pool = await sql.connect(config);
-        let result2 = await pool.request()
-            .input('FechaInicial', sql.VarChar(256), FechaInicial)
-            .input('FechaFinal', sql.VarChar(256),FechaFinal)
-            .input('CedJuridica', sql.VarChar(256),CedJuridica)
-            .input('Tipo', sql.VarChar(256),Tipo)
-            .execute('sp_get_MontoEnFarmaciaSegunTipoDePedidoEnRango')
-        sql.close();
-        success = {"Succes": "True", "Result": result2.recordset[0]["Monto"]};
-    }
-    catch(err)
-    {
-        sql.close();
-        success = {"Succes": "False", "Result": err};
-        console.log(err);
-    }
-    res.send(success);
-    console.log(req.body)
- });
 
- server.post("/Clientes/GETTopClientesEnRango", async (req, res) => {
-    let FechaInicial= req.body["FechaInicial"];
-    let FechaFinal = req.body["FechaFinal"];
-    let CedJuridica = req.body["CedJuridica"];
-    let success;
-    try
-    {
-        let pool = await sql.connect(config);
-        let result2 = await pool.request()
-            .input('FechaInicial', sql.VarChar(256), FechaInicial)
-            .input('FechaFinal', sql.VarChar(256),FechaFinal)
-            .input('CedJuridica', sql.VarChar(256),CedJuridica)
-            .execute('sp_get_TopClientesXSucursalEnRango')
-        sql.close();
-        success = {"Succes": "True", "Result": result2.recordset};
-    }
-    catch(err)
-    {
-        sql.close();
-        success = {"Succes": "False", "Result": err};
-        console.log(err);
-    }
-    res.send(success);
-    console.log(req.body)
- });
-    
+
+ 
 
  server.listen(port, ()=> console.log(`Listening on port ${port}`))
  
