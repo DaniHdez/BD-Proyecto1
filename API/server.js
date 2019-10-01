@@ -844,6 +844,8 @@ server.post("/Medicamentos/POSTMedicamento", async (req, res) => {
     let Tipo = req.body["Tipo"];
     let Marca = req.body["Marca"];
     let CodigoDeMedicamento = req.body["CodigoDeMedicamento"];
+    let Farmacia = req.body["Farmacia"];
+    let Stock = req.body["Stock"];
     let success;
     var Img = Buffer.from(Foto);
     try
@@ -861,6 +863,7 @@ server.post("/Medicamentos/POSTMedicamento", async (req, res) => {
             .input('Tipo', sql.VarChar(256), Tipo)
             .input('Marca', sql.VarChar(256), Marca)
             .input('CodigoDeMedicamento', sql.VarChar(256), CodigoDeMedicamento)
+            .input()
             .execute('sp_push_Medicamento')
         sql.close();
 
@@ -899,6 +902,8 @@ server.post("/Medicamentos/POSTMedicamento", async (req, res) => {
             .input('Precio', sql.Money, Precio)
             .input('Tipo', sql.int, Tipo)
             .input('Marca', sql.int, Marca)
+            .input('CedJuridica', sql.VarChar(256),Farmacia)
+            .input('Stock', sql.VarChar(256), Stock)
             //.output('Contraseña', sql.VarChar(256))
             .execute('sp_push_Medicamento_sin_fk')
         sql.close();
@@ -1214,6 +1219,20 @@ server.post("/Pedidos/UPDATEMontoFarmacia", async (req, res) => {
        console.log(error) 
     }
     res.send(result);
+});
+
+server.get("/pedidos/all", async(req, res) =>{
+    let result;
+    try {
+        let pool = await sql.connect(config);
+        let query = await pool.request()
+            .execute('sp_get_AllPedidos')
+        sql.close()
+        result = {"Succes":"True", Result:query.recordset}
+    } catch (error) {
+        result = {"Succes":"False", Result:error}
+    }
+    res.send(result)
 });
 
  //  #### CREADOS POR DANI #### ///

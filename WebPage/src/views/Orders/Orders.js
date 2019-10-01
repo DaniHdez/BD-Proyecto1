@@ -22,7 +22,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import {
-  Orders,
+  // Orders,
   clientsH,
   orderState,
   orderType,
@@ -70,6 +70,8 @@ const useStyles = makeStyles(theme => ({
 export default function TableList() {
   const classes = useStyles();
 
+  var Orders = []
+
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -115,9 +117,10 @@ export default function TableList() {
 
   const [state, setState] = React.useState({
     columns: [
-      { title: "Tipo", field: "type" },
-      { title: "Fecha", field: "date" },
+      { title: "Farmacia", field: "farmacia" },
       { title: "Cliente", field: "client" },
+      { title: "Fecha", field: "date" },
+      { title: "Tipo", field: "type" },
       { title: "Estado", field: "state" },
       { title: "Detalle", field: "datail" }
     ],
