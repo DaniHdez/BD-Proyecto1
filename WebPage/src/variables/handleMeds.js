@@ -1,6 +1,6 @@
 import { func } from "prop-types";
 
-export {get_meds}
+export {get_meds, create_med}
 
 
 function get_meds (Meds){
@@ -51,7 +51,19 @@ function get_meds (Meds){
 
 
 
-function create_med (name, brand, descript, type, doseI, doseA, effects, price, stock )
+function create_med (
+    name, 
+    brand,
+    descript,
+    type,
+    doseI,
+    doseA,
+    effects,
+    price,
+    code,
+    cedfarmacia,
+    stock 
+    )
 {
     var xhr = new window.XMLHttpRequest()
     var request_response;
@@ -64,37 +76,24 @@ function create_med (name, brand, descript, type, doseI, doseA, effects, price, 
             if(register == "True")
             {
                 alert('Registro Correcto')
-            }
-            else{
-                alert('No se pudo realizar la operación\n')
-            }
-        }
-        else{
-            alert('No se pudo realizar la conexión\n')   
-        }
       };
+    }
+}
     
-   
-
-    // let Nombre = req.body["Nombre"];
-    // let Descripcion = req.body["Descripcion"];
-    // let DosisNinos = req.body["DosisNinos"];
-    // let DosisAdultos = req.body["DosisAdultos"];
-    // let EfectosSecundarios = req.body["EfectosSecundarios"];
-    // let Foto = req.body["Foto"];
-    // let Precio = req.body["Precio"];
-    // let Tipo = req.body["Tipo"];
-    // let IdMarca = req.body["IdMarca"];
-    
-  
+     
   let values = { 
-    Nombre:id,
-    Descripcion: name, 
-    DosisNinos:lastname1,
-    DosisAdultos:lastname2, 
-    EfectosSecundarios:phone,
-    Foto: 3,
-    Provincia:province
+    Nombre:name,
+    Descripcion: descript, 
+    DosisNinos:doseI,
+    DosisAdultos:doseA, 
+    EfectosSecundarios:effects,
+    Foto:"N/A",
+    Precio:price,
+    Tipo:type,
+    Marca:brand,
+    CodigoDeMedicamento:code,
+    CedJuridica:cedfarmacia,
+    Stock:stock,
   };
   var to_send_json = JSON.stringify(values);
   xhr.open('POST', 'http://localhost:8080/Medicamentos/POSTMedicamento', false )

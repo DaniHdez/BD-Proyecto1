@@ -832,8 +832,10 @@ server.post("/Pedidos/GETPedidosEnRango", async (req, res) => {
     res.send(success);
  });
 
- server.post("/Medicamentos/POSTMedicamento", async (req, res) => {
+//  #### 
+server.post("/Medicamentos/POSTMedicamento", async (req, res) => {
     let Nombre = req.body["Nombre"];
+    let CodigoDeMedicamento = req.body["CodigoDeMedicamento"];
     let Descripcion = req.body["Descripcion"];
     let DosisNinos = req.body["DosisNinos"];
     let DosisAdultos = req.body["DosisAdultos"];
@@ -841,22 +843,28 @@ server.post("/Pedidos/GETPedidosEnRango", async (req, res) => {
     let Foto = req.body["Foto"];
     let Precio = req.body["Precio"];
     let Tipo = req.body["Tipo"];
-    let IdMarca = req.body["IdMarca"];
+    let Marca = req.body["Marca"];
+    let CedJuridica = req.body["CedJuridica"];
+    let Stock = req.body["Stock"];
     let success;
+    var Img = Buffer.from(Foto);
     try
     {
         let pool = await sql.connect(config);
+        console.log("HOLI");
         let result2 = await pool.request()
             .input('Nombre', sql.VarChar(256), Nombre)
+            .input('CodigoDeMedicamento', sql.VarChar(256), CodigoDeMedicamento)
             .input('Descripcion', sql.VarChar(256), Descripcion)
-            .input('DosisAdultos',sql.VarChar(256),DosisAdultos)
             .input('DosisNinos', sql.VarChar(256), DosisNinos)
+            .input('DosisAdultos', sql.VarChar(256), DosisAdultos)
             .input('EfectosSecundarios', sql.VarChar(256), EfectosSecundarios)
-            .input('Foto', sql.VarBinary, Foto) //Recomendar cambiar a varbinary(max)
+            .input('Foto', sql.VarBinary(256), Img) //Recomendar cambiar a varbinary(max)
             .input('Precio', sql.Money, Precio)
-            .input('Tipo', sql.int, Tipo)
-            .input('IdMarca', sql.int, IdMarca)
-            //.output('Contraseña', sql.VarChar(256))
+            .input('Tipo', sql.VarChar(256), Tipo)
+            .input('Marca', sql.VarChar(256), Marca)
+            .input('CedJuridica', sql.VarChar(256), CedJuridica)
+            .input('Stock', sql.VarChar(256), Stock)
             .execute('sp_push_Medicamento')
         sql.close();
 
@@ -872,6 +880,7 @@ server.post("/Pedidos/GETPedidosEnRango", async (req, res) => {
  });
 
 
+ 
  server.post("/Medicamentos/POSTMedicamento_NFK", async (req, res) => {
     let Nombre = req.body["Nombre"];
     let Descripcion = req.body["Descripcion"];
@@ -896,6 +905,8 @@ server.post("/Pedidos/GETPedidosEnRango", async (req, res) => {
             .input('Precio', sql.Money, Precio)
             .input('Tipo', sql.int, Tipo)
             .input('Marca', sql.int, Marca)
+            .input('CedJuridica', sql.VarChar(256),Farmacia)
+            .input('Stock', sql.VarChar(256), Stock)
             //.output('Contraseña', sql.VarChar(256))
             .execute('sp_push_Medicamento_sin_fk')
         sql.close();
@@ -1211,6 +1222,21 @@ server.post("/Pedidos/UPDATEMontoFarmacia", async (req, res) => {
        console.log(error) 
     }
     res.send(result);
+});
+
+server.get("/pedidos/all", async(req, res) =>{
+    let result;
+    try {
+        let pool = await sql.connect(config);
+        let query = await pool.request()
+            .execute('sp_get_AllPedidos')
+        sql.close()
+        result = {"Succes":"True", Result:query.recordset}
+    } catch (error) {
+        result = {"Succes":"False", Result:error}
+        console.log(error)
+    }
+    res.send(result)
 });
 
  //  #### CREADOS POR DANI #### ///

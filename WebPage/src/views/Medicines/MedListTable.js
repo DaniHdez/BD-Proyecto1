@@ -66,7 +66,11 @@ export default function TableList() {
   const [open, setOpen] = React.useState(false);
 
   const [values, setValues] = React.useState({
-    multiline: ""
+    description: "",
+    sideeffects:"",
+    adultdose:"",
+    infantdose: "",
+
   });
 
   const [state, setState] = React.useState({
@@ -106,7 +110,9 @@ export default function TableList() {
     var adultDoseMed = document.getElementById("medicineDoseA").value;
     var effectsMed = document.getElementById("sideEffects").value;
     var price = document.getElementById("medicinePrice").value;
-    var stock = document.getElementById("medicineCode").value;
+    var code = document.getElementById("medicineCode").value;
+    var cedFarmacia = document.getElementById("cedFarmacia").value;
+    var stock = document.getElementById("cantidad").value;
     if (
       nameMed != "" &&
       brandMed != "" &&
@@ -116,8 +122,13 @@ export default function TableList() {
       adultDoseMed != "" &&
       effectsMed != "" &&
       price != "" &&
+      code != "" &&
+      cedFarmacia != ""&&
       stock != ""
     ) {
+      // create_med (name, brand, descript, type, doseI, doseA, effects, price, code )
+      API.create_med(nameMed, brandMed, descpMed, typeMed, infantDoseMed, adultDoseMed, effectsMed, price, code, cedFarmacia, stock)
+      
       setOpen(false);
     }
   };
@@ -202,10 +213,10 @@ export default function TableList() {
               required
               id="medicineDescription"
               label="Descripción"
-              multiline
+              description
               rowsMax="4"
-              value={values.multiline}
-              onChange={handleChange("multiline")}
+              value={values.description}
+              onChange={handleChange("description")}
               className={classes.textField}
               margin="normal"
               fullWidth
@@ -223,10 +234,10 @@ export default function TableList() {
               required
               id="medicineDoseI"
               label="Dosis para niños"
-              multiline
+              infantdose
               rowsMax="4"
-              value={values.multiline}
-              onChange={handleChange("multiline")}
+              value={values.infantdose}
+              onChange={handleChange("infantdose")}
               className={classes.textField}
               margin="normal"
               fullWidth
@@ -235,10 +246,10 @@ export default function TableList() {
               required
               id="medicineDoseA"
               label="Dosis para adultos"
-              multiline
+              adultdose
               rowsMax="4"
-              value={values.multiline}
-              onChange={handleChange("multiline")}
+              value={values.adultdose}
+              onChange={handleChange("adultdose")}
               className={classes.textField}
               margin="normal"
               fullWidth
@@ -247,10 +258,10 @@ export default function TableList() {
               required
               id="sideEffects"
               label="Efectos secundarios"
-              multiline
+              sideeffects
               rowsMax="4"
-              value={values.multiline}
-              onChange={handleChange("multiline")}
+              value={values.sideeffects}
+              onChange={handleChange("sideeffects")}
               className={classes.textField}
               margin="normal"
               fullWidth
@@ -274,6 +285,25 @@ export default function TableList() {
               type="numerical"
               fullWidth
             />
+            <TextField
+              autoFocus
+              required
+              margin="dense"
+              id="cedFarmacia"
+              label="Cedula Farmacia"
+              //type="numerical"
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              required
+              margin="dense"
+              id="cantidad"
+              label="Cantidad"
+              type="numerical"
+              fullWidth
+            />
+            
           </DialogContent>
           <DialogActions>
             <Button onClick={handlePopClickCancel} color="primary">
