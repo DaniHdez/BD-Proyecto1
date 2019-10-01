@@ -87,7 +87,7 @@ export default function TableClients() {
       province != ""
     ) {
 
-      var register = API.create_client(name, lastname1, lastname2, id, phone, province);    
+      API.create_client(name, lastname1, lastname2, id, phone, province);    
        
       ////////////////////////////////////////////////////////////
       //Aca se deb pasar los datos escritos en el form, a la api//

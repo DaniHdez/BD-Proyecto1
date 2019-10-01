@@ -58,7 +58,7 @@ const useStyles = makeStyles(styles);
 export default function TableList() {
   const classes = useStyles();
   var Medicines = []
-  //API.get_meds(Medicines);
+  API.get_meds(Medicines);
   // ######################## 
   // LLAMAR AL API POR DATOS
   // GET ALL PEDIDOS(MEDICINES)
@@ -96,8 +96,33 @@ export default function TableList() {
   };
 
   const handlePopClickAccept = () => {
-    console.log("HOLIS POP CLICK ACCEPT")
-    setOpen(false);
+  // ######################## 
+  // LLAMAR AL API PARA CREAR MEDICINAS
+  // /Medicamentos/POSTMedicamento"
+  // ######################## 
+  var nameMed = document.getElementById("medicineName").value;
+  var brandMed = document.getElementById("medicineBrand").value;
+  var descpMed = document.getElementById("medicineDescription").value;
+  var typeMed = document.getElementById("medicineType").value;
+  var infantDoseMed = document.getElementById("medicineDoseI").value;
+  var adultDoseMed = document.getElementById("medicineDoseA").value;
+  var effectsMed = document.getElementById("sideEffects").value;
+  var price = document.getElementById("medicinePrice").value;
+  var stock = document.getElementById("medicineQuantity").value;
+  if (
+    nameMed != "" &&
+    brandMed != "" &&
+    descpMed!= "" &&
+    typeMed != "" &&
+    infantDoseMed != "" &&
+    adultDoseMed != "" &&
+    effectsMed != "" &&
+    price != "" &&
+    stock != ""
+  ) {
+    
+      setOpen(false);
+    }
   };
 
   return (
