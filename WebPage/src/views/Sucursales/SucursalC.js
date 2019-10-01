@@ -14,7 +14,7 @@ import { TextField } from "@material-ui/core";
 
 import { topClientC } from "variables/general.js";
 import * as API from "variables/handleSucursales.js";
-import { mr } from "variables/handleSucursales.js";
+import { mrC } from "variables/handleSucursales.js";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -38,6 +38,7 @@ export default function Sucursal() {
     var fechafinal = document.getElementById("findateMR").value;
     //mr = API.getMontoRecaudadoCartago(fechainicial, fechafinal);
     API.getMontoRecaudadoCartago(fechainicial, fechafinal);
+    document.getElementById("cardBodyMR").innerHTML = mrC;
     //console.log(mr);
     //###################################
     //obtener datos de DB en esas fechas
@@ -91,7 +92,9 @@ export default function Sucursal() {
           </CardHeader>
           <CardBody>
             <h4 className={classes.cardTitle}>Monto recaudado:</h4>
-            <h1 className={classes.CardCategory}> {mr} </h1>
+            <div id="cardBodyMR">
+              <h1 className={classes.CardCategory}>{mrC}</h1>
+            </div>
           </CardBody>
         </Card>
       </GridItem>

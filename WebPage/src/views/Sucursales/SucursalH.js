@@ -13,6 +13,8 @@ import { TextField } from "@material-ui/core";
 import Table from "components/Table/Table.js";
 
 import { topClientH } from "variables/general.js";
+import * as API from "variables/handleSucursales.js";
+import { mrH } from "variables/handleSucursales.js";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -26,7 +28,9 @@ export default function Sucursal() {
 
   function handleMRFilter() {
     var fechainicial = document.getElementById("inidateMR").value;
-    var fechainicial = document.getElementById("findateMR").value;
+    var fechafinal = document.getElementById("findateMR").value;
+    API.getMontoRecaudadoHeredia(fechainicial, fechafinal);
+    document.getElementById("cardBodyMR").innerHTML = mrH;
     //###################################
     //obtener datos de DB en esas fechas
     //###################################
@@ -47,7 +51,6 @@ export default function Sucursal() {
   }
 
   //Funcin para obtener el valor de la fecha indicada
-  const mr = "$1000";
   const mrtr = "$1000";
   const mrte = "$1000";
   return (
@@ -81,7 +84,9 @@ export default function Sucursal() {
           </CardHeader>
           <CardBody>
             <h4 className={classes.cardTitle}>Monto recaudado:</h4>
-            <h1 className={classes.CardCategory}> {mr} </h1>
+            <div id="cardBodyMR">
+              <h1 className={classes.CardCategory}>{mrH}</h1>
+            </div>
           </CardBody>
         </Card>
       </GridItem>
