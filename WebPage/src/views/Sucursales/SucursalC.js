@@ -27,9 +27,9 @@ export default function Sucursal() {
   //###################################
   //obtener datos de DB en esas fechas
   //###################################
-  const mr = "$1000";
-  const mrtr = "$1000";
-  const mrte = "$1000";
+  var mr;
+  var mrtr;
+  var mrte;
 
   function handleMRFilter() {
     var fechainicial = document.getElementById("inidateMR").value;

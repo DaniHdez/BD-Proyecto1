@@ -23,7 +23,7 @@ server.use(function (req, res, next) {
 */
 let config = {
     user: 'sa',
-    password:'paso1234',
+    password:'1234',
     server: 'localhost', 
     port:64403,
     database: 'FarmaTEC',
@@ -1207,38 +1207,33 @@ server.post("/Pedidos/UPDATEMontoFarmacia", async (req, res) => {
 
  //  #### CREADOS POR DANI #### ///
  server.post("/monto/montosucursalrango", async (req, res) => {
-    let CedulaJuridica = req.body["CedulaJuridica"];
-    let FechaInicial = req.body["FechaInicial"];
-    let FechaFinal = req.body["FechaFinal"];
-    let result;
+
+    let FechaInicial= req.body["FechaInicial"];
+    let FechaFinal= req.body["FechaFinal"];
+    let CedJuridica = req.body["CedJuridica"];
+    var Date1 = new Date(FechaInicial);
+    var Date2 = new Date(FechaFinal);
+    let success;
     try
     {
-        console.log(CedulaJuridica);
-        console.log(Date1);
-        console.log(Date2);
-        console.log("Holaaaaaaaaaaaaaaaaa")
-        console.log(sql.DateTime);
-        var Date1 = new Date(FechaInicial)
-        var Date2 = new Date(FechaFinal)
-
         let pool = await sql.connect(config);
-        let query = await pool.request()
-            .input('FechaInicial', sql.DateTime, Date1)
-            .input('FechaFinal', sql.DateTime, Date2)
-            .input('CedJuridica', sql.bigint, CedulaJuridica)
-           .execute('sp_get_MontoEnSucursalXRango')
-       sql.close()
-       console.log(query)
-       result = {"Succes": "True", "Result":query.recordset}
+        let result2 = await pool.request()
+            .input('FechaInicial',sql.DateTime, Date1)
+            .input('FechaFinal',sql.DateTime,Date2)
+            .input('CedJuridica',sql.VarChar(256), CedJuridica)
+            //.output('Contraseña', sql.VarChar(256))
+            .execute('sp_get_MontoEnSucursalXRango')
+        sql.close();
+        success = {"Succes": "True", "Result": result2.recordset[0][""]};
     }
-    catch (error) {
-       sql.close()
-       result = {"Succes":"False", "Result":error}
-       console.log(error) 
+    catch(err)
+    {
+        sql.close();
+        success = {"Succes": "False", "Result":err};
+        console.log(err);
     }
-    res.send(result);
-});
-
+    res.send(success);
+ });
 
 
     
