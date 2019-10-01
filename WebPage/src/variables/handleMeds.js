@@ -92,7 +92,7 @@ function create_med (
     Tipo:type,
     Marca:brand,
     CodigoDeMedicamento:code,
-    Farmacia:cedfarmacia,
+    CedJuridica:cedfarmacia,
     Stock:stock,
   };
   var to_send_json = JSON.stringify(values);

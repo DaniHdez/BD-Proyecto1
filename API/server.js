@@ -835,6 +835,7 @@ server.post("/Pedidos/GETPedidosEnRango", async (req, res) => {
 //  #### 
 server.post("/Medicamentos/POSTMedicamento", async (req, res) => {
     let Nombre = req.body["Nombre"];
+    let CodigoDeMedicamento = req.body["CodigoDeMedicamento"];
     let Descripcion = req.body["Descripcion"];
     let DosisNinos = req.body["DosisNinos"];
     let DosisAdultos = req.body["DosisAdultos"];
@@ -843,8 +844,7 @@ server.post("/Medicamentos/POSTMedicamento", async (req, res) => {
     let Precio = req.body["Precio"];
     let Tipo = req.body["Tipo"];
     let Marca = req.body["Marca"];
-    let CodigoDeMedicamento = req.body["CodigoDeMedicamento"];
-    let Farmacia = req.body["Farmacia"];
+    let CedJuridica = req.body["CedJuridica"];
     let Stock = req.body["Stock"];
     let success;
     var Img = Buffer.from(Foto);
@@ -854,6 +854,7 @@ server.post("/Medicamentos/POSTMedicamento", async (req, res) => {
         console.log("HOLI");
         let result2 = await pool.request()
             .input('Nombre', sql.VarChar(256), Nombre)
+            .input('CodigoDeMedicamento', sql.VarChar(256), CodigoDeMedicamento)
             .input('Descripcion', sql.VarChar(256), Descripcion)
             .input('DosisNinos', sql.VarChar(256), DosisNinos)
             .input('DosisAdultos', sql.VarChar(256), DosisAdultos)
@@ -862,8 +863,8 @@ server.post("/Medicamentos/POSTMedicamento", async (req, res) => {
             .input('Precio', sql.Money, Precio)
             .input('Tipo', sql.VarChar(256), Tipo)
             .input('Marca', sql.VarChar(256), Marca)
-            .input('CodigoDeMedicamento', sql.VarChar(256), CodigoDeMedicamento)
-            .input()
+            .input('CedJuridica', sql.VarChar(256), CedJuridica)
+            .input('Stock', sql.VarChar(256), Stock)
             .execute('sp_push_Medicamento')
         sql.close();
 
@@ -878,6 +879,8 @@ server.post("/Medicamentos/POSTMedicamento", async (req, res) => {
     res.send(success);
  });
 
+
+ 
  server.post("/Medicamentos/POSTMedicamento_NFK", async (req, res) => {
     let Nombre = req.body["Nombre"];
     let Descripcion = req.body["Descripcion"];
@@ -1231,6 +1234,7 @@ server.get("/pedidos/all", async(req, res) =>{
         result = {"Succes":"True", Result:query.recordset}
     } catch (error) {
         result = {"Succes":"False", Result:error}
+        console.log(error)
     }
     res.send(result)
 });

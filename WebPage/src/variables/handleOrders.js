@@ -1,3 +1,5 @@
+export {get_all_pedidos}
+
 
 function get_all_pedidos( Orders)
 {
@@ -11,7 +13,14 @@ function get_all_pedidos( Orders)
         var query  = request_response.Succes;
         if(query == "True")
         { 
-            for (var i = 0; i <json_Meds.length; i++){
+            var json_Orders = request_response.Result;
+            for (var i = 0; i <json_Orders.length; i++){
+                var tipo = "Regular";
+                if(json_Orders[i].Tipo == 1){ tipo = "Especial"}
+                var estado = "Entregado";
+                if(json_Orders[i].Estado == 1){ estado = "En Espera"}
+                
+                    
                 let tempOrder = {
                     // "farmacia"
                     // "client" 
@@ -19,12 +28,19 @@ function get_all_pedidos( Orders)
                     // "type"
                     // "state"
                     // "datail"
-                    farmacia:  json_Meds[i].farmacia,
-                    client: json_Meds[i].Nombre + " " + json_Meds[i].Apellido,
-                    date: json_Meds[i].Date,
-                    type: json_Meds[i].Tipo,
-                    state: json_Meds[i].State,
-                    datail: json_Meds[i].Detail
+                    //  Farmacia": "La Fischel",
+                    // "Cliente": "Ricardo",
+                    // "Apellido1": "Jiménez",
+                    // "Apellido2": "Muñoz",
+                    // "Fecha": "2019-07-01T00:00:00.000Z",
+                    // "Tipo": 1,
+                    // "Estado"
+                    farmacia:  json_Orders[i].Farmacia,
+                    client: json_Orders[i].Cliente + " " + json_Orders[i].Apellido1,
+                    date: json_Orders[i].Fecha,
+                    type: tipo,
+                    state: estado,
+                    code: json_Orders[i].Codigo
                 }
                 Orders.push(tempOrder)
             }
