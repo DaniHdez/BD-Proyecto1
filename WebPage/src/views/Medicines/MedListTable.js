@@ -22,7 +22,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 //import { Medicines } from "variables/general.js";
 import * as API from "variables/handleMeds";
 
-
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -57,12 +56,12 @@ const useStyles = makeStyles(styles);
 
 export default function TableList() {
   const classes = useStyles();
-  var Medicines = []
+  var Medicines = [];
   API.get_meds(Medicines);
-  // ######################## 
+  // ########################
   // LLAMAR AL API POR DATOS
   // GET ALL PEDIDOS(MEDICINES)
-  // ######################## 
+  // ########################
 
   const [open, setOpen] = React.useState(false);
 
@@ -84,7 +83,6 @@ export default function TableList() {
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
-    
   };
 
   const handleClick = () => {
@@ -96,31 +94,30 @@ export default function TableList() {
   };
 
   const handlePopClickAccept = () => {
-  // ######################## 
-  // LLAMAR AL API PARA CREAR MEDICINAS
-  // /Medicamentos/POSTMedicamento"
-  // ######################## 
-  var nameMed = document.getElementById("medicineName").value;
-  var brandMed = document.getElementById("medicineBrand").value;
-  var descpMed = document.getElementById("medicineDescription").value;
-  var typeMed = document.getElementById("medicineType").value;
-  var infantDoseMed = document.getElementById("medicineDoseI").value;
-  var adultDoseMed = document.getElementById("medicineDoseA").value;
-  var effectsMed = document.getElementById("sideEffects").value;
-  var price = document.getElementById("medicinePrice").value;
-  var stock = document.getElementById("medicineQuantity").value;
-  if (
-    nameMed != "" &&
-    brandMed != "" &&
-    descpMed!= "" &&
-    typeMed != "" &&
-    infantDoseMed != "" &&
-    adultDoseMed != "" &&
-    effectsMed != "" &&
-    price != "" &&
-    stock != ""
-  ) {
-    
+    // ########################
+    // LLAMAR AL API PARA CREAR MEDICINAS
+    // /Medicamentos/POSTMedicamento"
+    // ########################
+    var nameMed = document.getElementById("medicineName").value;
+    var brandMed = document.getElementById("medicineBrand").value;
+    var descpMed = document.getElementById("medicineDescription").value;
+    var typeMed = document.getElementById("medicineType").value;
+    var infantDoseMed = document.getElementById("medicineDoseI").value;
+    var adultDoseMed = document.getElementById("medicineDoseA").value;
+    var effectsMed = document.getElementById("sideEffects").value;
+    var price = document.getElementById("medicinePrice").value;
+    var stock = document.getElementById("medicineCode").value;
+    if (
+      nameMed != "" &&
+      brandMed != "" &&
+      descpMed != "" &&
+      typeMed != "" &&
+      infantDoseMed != "" &&
+      adultDoseMed != "" &&
+      effectsMed != "" &&
+      price != "" &&
+      stock != ""
+    ) {
       setOpen(false);
     }
   };
@@ -272,8 +269,8 @@ export default function TableList() {
               autoFocus
               required
               margin="dense"
-              id="medicineQuantity"
-              label="Cantidad"
+              id="medicineCode"
+              label="Código"
               type="numerical"
               fullWidth
             />
