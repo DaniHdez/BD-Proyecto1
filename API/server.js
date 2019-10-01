@@ -832,7 +832,8 @@ server.post("/Pedidos/GETPedidosEnRango", async (req, res) => {
     res.send(success);
  });
 
- server.post("/Medicamentos/POSTMedicamento", async (req, res) => {
+//  #### 
+server.post("/Medicamentos/POSTMedicamento", async (req, res) => {
     let Nombre = req.body["Nombre"];
     let Descripcion = req.body["Descripcion"];
     let DosisNinos = req.body["DosisNinos"];
@@ -841,22 +842,25 @@ server.post("/Pedidos/GETPedidosEnRango", async (req, res) => {
     let Foto = req.body["Foto"];
     let Precio = req.body["Precio"];
     let Tipo = req.body["Tipo"];
-    let IdMarca = req.body["IdMarca"];
+    let Marca = req.body["Marca"];
+    let CodigoDeMedicamento = req.body["CodigoDeMedicamento"];
     let success;
+    var Img = Buffer.from(Foto);
     try
     {
         let pool = await sql.connect(config);
+        console.log("HOLI");
         let result2 = await pool.request()
             .input('Nombre', sql.VarChar(256), Nombre)
             .input('Descripcion', sql.VarChar(256), Descripcion)
-            .input('DosisAdultos',sql.VarChar(256),DosisAdultos)
             .input('DosisNinos', sql.VarChar(256), DosisNinos)
+            .input('DosisAdultos', sql.VarChar(256), DosisAdultos)
             .input('EfectosSecundarios', sql.VarChar(256), EfectosSecundarios)
-            .input('Foto', sql.VarBinary, Foto) //Recomendar cambiar a varbinary(max)
+            .input('Foto', sql.VarBinary(256), Img) //Recomendar cambiar a varbinary(max)
             .input('Precio', sql.Money, Precio)
-            .input('Tipo', sql.int, Tipo)
-            .input('IdMarca', sql.int, IdMarca)
-            //.output('Contraseña', sql.VarChar(256))
+            .input('Tipo', sql.VarChar(256), Tipo)
+            .input('Marca', sql.VarChar(256), Marca)
+            .input('CodigoDeMedicamento', sql.VarChar(256), CodigoDeMedicamento)
             .execute('sp_push_Medicamento')
         sql.close();
 
@@ -870,7 +874,6 @@ server.post("/Pedidos/GETPedidosEnRango", async (req, res) => {
     }
     res.send(success);
  });
-
 
  server.post("/Medicamentos/POSTMedicamento_NFK", async (req, res) => {
     let Nombre = req.body["Nombre"];
