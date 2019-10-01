@@ -12,9 +12,11 @@ import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
 import Table from "components/Table/Table.js";
 
-import { topClientSJ } from "variables/general.js";
+//import { topClientSJ } from "variables/general.js";
 import * as API from "variables/handleSucursales.js";
 import { mrSJ } from "variables/handleSucursales.js";
+import { mrTSJ } from "variables/handleSucursales.js";
+import { topClientSJ } from "variables/handleSucursales.js";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -36,22 +38,28 @@ export default function Sucursal() {
   }
   function handleMRTFilter() {
     var fechainicial = document.getElementById("inidateMRT").value;
-    var fechainicial = document.getElementById("findateMRT").value;
+    var fechafinal = document.getElementById("findateMRT").value;
+    API.getMontoRecaudadoTipoSanJose(fechainicial, fechafinal, 1);
+    document.getElementById("CardBodyMRT1").innerHTML = mrTSJ;
+    API.getMontoRecaudadoTipoSanJose(fechainicial, fechafinal, 2);
+    document.getElementById("CardBodyMRT2").innerHTML = mrTSJ;
     //###################################
     //obtener datos de DB en esas fechas
     //###################################
   }
   function handleTCFilter() {
     var fechainicial = document.getElementById("inidateTC").value;
-    var fechainicial = document.getElementById("findateTC").value;
+    var fechafinal = document.getElementById("findateTC").value;
+    API.getTopClienteSanJose(fechainicial, fechafinal);
+    //document.getElementById("TopClientTable").tableData = topClientC;
+    alert(topClientSJ);
     //###################################
     //obtener datos de DB en esas fechas
     //###################################
   }
 
   //Funcin para obtener el valor de la fecha indicada
-  const mrtr = "$1000";
-  const mrte = "$1000";
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={6}>
@@ -118,8 +126,14 @@ export default function Sucursal() {
           </CardHeader>
           <CardBody>
             <h4 className={classes.cardTitle}>Monto recaudado por tipo:</h4>
-            <h2 className={classes.CardCategory}> Pedido regular {mrtr} </h2>
-            <h2 className={classes.CardCategory}> Pedido especial {mrte} </h2>
+            <h2 className={classes.CardCategory}> Pedido regular </h2>
+            <div id="CardBodyMRT1">
+              <h1>{mrTSJ}</h1>
+            </div>
+            <h2 className={classes.CardCategory}> Pedido especial </h2>
+            <div id="CardBodyMRT2">
+              <h1>{mrTSJ}</h1>
+            </div>
           </CardBody>
         </Card>
       </GridItem>

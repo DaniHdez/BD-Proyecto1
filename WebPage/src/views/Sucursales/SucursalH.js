@@ -12,9 +12,11 @@ import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
 import Table from "components/Table/Table.js";
 
-import { topClientH } from "variables/general.js";
+//import { topClientH } from "variables/general.js";
 import * as API from "variables/handleSucursales.js";
 import { mrH } from "variables/handleSucursales.js";
+import { mrTH } from "variables/handleSucursales.js";
+import { topClientH } from "variables/handleSucursales.js";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -37,14 +39,21 @@ export default function Sucursal() {
   }
   function handleMRTFilter() {
     var fechainicial = document.getElementById("inidateMRT").value;
-    var fechainicial = document.getElementById("findateMRT").value;
+    var fechafinal = document.getElementById("findateMRT").value;
+    API.getMontoRecaudadoTipoHeredia(fechainicial, fechafinal, 1);
+    document.getElementById("CardBodyMRT1").innerHTML = mrTH;
+    API.getMontoRecaudadoTipoHeredia(fechainicial, fechafinal, 2);
+    document.getElementById("CardBodyMRT2").innerHTML = mrTH;
     //###################################
     //obtener datos de DB en esas fechas
     //###################################
   }
   function handleTCFilter() {
     var fechainicial = document.getElementById("inidateTC").value;
-    var fechainicial = document.getElementById("findateTC").value;
+    var fechafinal = document.getElementById("findateTC").value;
+    API.getTopClienteHeredia(fechainicial, fechafinal);
+    //document.getElementById("TopClientTable").tableData = topClientC;
+    alert(topClientH);
     //###################################
     //obtener datos de DB en esas fechas
     //###################################
@@ -119,8 +128,14 @@ export default function Sucursal() {
           </CardHeader>
           <CardBody>
             <h4 className={classes.cardTitle}>Monto recaudado por tipo:</h4>
-            <h2 className={classes.CardCategory}> Pedido regular {mrtr} </h2>
-            <h2 className={classes.CardCategory}> Pedido especial {mrte} </h2>
+            <h2 className={classes.CardCategory}> Pedido regular</h2>
+            <div id="CardBodyMRT1">
+              <h1>{mrTH}</h1>
+            </div>
+            <h2 className={classes.CardCategory}> Pedido especial </h2>
+            <div id="CardBodyMRT2">
+              <h1>{mrTH}</h1>
+            </div>
           </CardBody>
         </Card>
       </GridItem>

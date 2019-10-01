@@ -12,9 +12,11 @@ import Table from "components/Table/Table.js";
 import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
 
-import { topClientC } from "variables/general.js";
+//import { topClientC } from "variables/general.js";
 import * as API from "variables/handleSucursales.js";
 import { mrC } from "variables/handleSucursales.js";
+import { mrTC } from "variables/handleSucursales.js";
+import { topClientC } from "variables/handleSucursales.js";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -30,7 +32,7 @@ export default function Sucursal() {
   //obtener datos de DB en esas fechas
   //###################################
   //var mr = 0;
-  var mrtr;
+  //var mrtr;
   var mrte;
 
   function handleMRFilter() {
@@ -46,14 +48,23 @@ export default function Sucursal() {
   }
   function handleMRTFilter() {
     var fechainicial = document.getElementById("inidateMRT").value;
-    var fechainicial = document.getElementById("findateMRT").value;
+    var fechafinal = document.getElementById("findateMRT").value;
+    API.getMontoRecaudadoTipoCartago(fechainicial, fechafinal, 1);
+    document.getElementById("CardBodyMRT1").innerHTML = mrTC;
+    API.getMontoRecaudadoTipoCartago(fechainicial, fechafinal, 2);
+    document.getElementById("CardBodyMRT2").innerHTML = mrTC;
+
     //###################################
     //obtener datos de DB en esas fechas
     //###################################
   }
   function handleTCFilter() {
     var fechainicial = document.getElementById("inidateTC").value;
-    var fechainicial = document.getElementById("findateTC").value;
+    var fechafinal = document.getElementById("findateTC").value;
+    API.getTopClienteCartago(fechainicial, fechafinal);
+    //document.getElementById("TopClientTable").tableData = topClientC;
+    alert(topClientC);
+
     //###################################
     //obtener datos de DB en esas fechas
     //###################################
@@ -127,8 +138,14 @@ export default function Sucursal() {
           </CardHeader>
           <CardBody>
             <h4 className={classes.cardTitle}>Monto recaudado por tipo:</h4>
-            <h2 className={classes.CardCategory}> Pedido regular {mrtr} </h2>
-            <h2 className={classes.CardCategory}> Pedido especial {mrte} </h2>
+            <h2 className={classes.CardCategory}> Pedido regular</h2>
+            <div id="CardBodyMRT1">
+              <h1>{mrTC}</h1>
+            </div>
+            <h2 className={classes.CardCategory}> Pedido especial </h2>
+            <div id="CardBodyMRT2">
+              <h1>{mrTC}</h1>
+            </div>
           </CardBody>
         </Card>
       </GridItem>
@@ -164,6 +181,7 @@ export default function Sucursal() {
               tableHeaderColor="warning"
               tableHead={["Nombre", "Categoria", "Total de pedidos"]}
               tableData={topClientC}
+              id="TopClientTable"
             />
           </CardBody>
         </Card>
